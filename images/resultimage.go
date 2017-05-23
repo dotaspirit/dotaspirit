@@ -14,6 +14,11 @@ import (
 	"gopkg.in/gographics/imagick.v2/imagick"
 )
 
+func getRplayerRole(pos, role int) string {
+	roleNames := [3]string{"Safe", "Mid", "Offlane"}
+	return roleNames[role-1]
+}
+
 func prettifyBigValues(value int) string {
 	if value < 1000 {
 		return strconv.Itoa(value)
@@ -291,7 +296,11 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 		deaths := matchData.Players[i].Deaths
 		assists := matchData.Players[i].Assists
 
-		scalex := 190 / (kills + deaths + assists)
+		scalex := 190
+
+		if kills+deaths+assists != 0 {
+			scalex = 190 / (kills + deaths + assists)
+		}
 
 		playerpw.SetColor(config.KDAColor[0])
 		playerdw.SetFillColor(playerpw)
@@ -325,8 +334,20 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 		}
 		playerdw.Annotation(95, 30, name)
 
-		playerdw.SetFontSize(config.TextSize15)
 		playerdw.SetFont("HypatiaSansPro-Regular")
+
+		playerpw.SetColor("#00000077")
+		playerdw.SetFillColor(playerpw)
+		playerdw.Rectangle(0, 125, 174, 156)
+
+		playerpw.SetColor(config.Text)
+		playerdw.SetFillColor(playerpw)
+
+		playerdw.SetTextAlignment(imagick.ALIGN_LEFT)
+		playerdw.Annotation(10, 148, getRplayerRole(i, matchData.Players[i].LaneRole))
+
+		playerdw.SetTextAlignment(imagick.ALIGN_CENTER)
+		playerdw.SetFontSize(config.TextSize15)
 		playerdw.Annotation(95, 229, fmt.Sprintf("%d / %d / %d", kills, deaths, assists))
 
 		playerpw.SetColor(config.TextGold)
