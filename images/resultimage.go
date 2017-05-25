@@ -15,8 +15,8 @@ import (
 )
 
 func getRplayerRole(pos, role int) string {
-	roleNames := [3]string{"Safe", "Mid", "Offlane"}
-	return roleNames[role-1]
+	roleNames := [5]string{"Unknown", "Safe", "Mid", "Offlane", "Jungle"}
+	return roleNames[role]
 }
 
 func prettifyBigValues(value int) string {
