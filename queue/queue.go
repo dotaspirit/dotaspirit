@@ -30,13 +30,13 @@ func getJson(url string, target interface{}) error {
 	return json.NewDecoder(r.Body).Decode(target)
 }
 
-func loadLeaguesConfig() leaguesConfig {
+func loadLeaguesConfig() types.LeaguesConfig {
 	buf := bytes.NewBuffer(nil)
 	f, _ := os.Open("config/leagues.json") // Error handling elided for brevity.
 	io.Copy(buf, f)                        // Error handling elided for brevity.
 	f.Close()
 
-	var jsonobject leaguesConfig
+	var jsonobject types.LeaguesConfig
 
 	err := json.Unmarshal(buf.Bytes(), &jsonobject)
 

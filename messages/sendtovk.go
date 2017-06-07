@@ -18,6 +18,23 @@ import (
 
 // https://oauth.vk.com/authorize?client_id=APP_ID&redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=photos,wall,offline&v=5.63&revoke=1&response_type=token
 
+func loadLeaguesConfig() types.LeaguesConfig {
+	buf := bytes.NewBuffer(nil)
+	f, _ := os.Open("config/leagues.json") // Error handling elided for brevity.
+	io.Copy(buf, f)                        // Error handling elided for brevity.
+	f.Close()
+
+	var jsonobject types.LeaguesConfig
+
+	err := json.Unmarshal(buf.Bytes(), &jsonobject)
+
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+
+	return jsonobject
+}
+
 func loadMatchData(matchID int64) types.Match {
 	var sMatchID = strconv.FormatInt(matchID, 10)
 	file, e := ioutil.ReadFile("./tmp/matches/" + sMatchID)
@@ -36,6 +53,23 @@ func loadMatchData(matchID int64) types.Match {
 	return jsonobject
 }
 
+func seriesTypeToText(id int) string {
+	seriesTypes := []string{"bo1", "bo3", "bo5"}
+	return seriesTypes[id]
+}
+
+func getLeagueHashtag(id int) string {
+	leaguesData := loadLeaguesConfig()
+
+	for _, league := range leaguesData.LeaguesData {
+		if league.Leagueid == id {
+			return league.Hashtags
+		}
+	}
+
+	return ""
+}
+
 func makeVkText(matchID int64) string {
 	matchData := loadMatchData(matchID)
 	radiantName := matchData.RadiantTeam.Name
@@ -49,6 +83,8 @@ func makeVkText(matchID int64) string {
 	minutes = minutes % 60
 	leagueName := matchData.League.Name
 	seriesID := matchData.SeriesID
+	seriesType := matchData.SeriesType
+	leagueID := matchData.League.Leagueid
 
 	if radiantName == "" {
 		radiantName = "Radiant"
@@ -57,21 +93,24 @@ func makeVkText(matchID int64) string {
 		direName = "Dire"
 	}
 
+	seriesText := seriesTypeToText(seriesType)
+	leagueHashTags := getLeagueHashtag(leagueID)
+
 	if matchData.RadiantWin == true {
 		if seriesID != 0 {
-			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s\n#rsltdtk #dota2 #results@rsltdtk #s%d@rsltdtk",
-				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesID)
+			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s, %s\n#rsltdtk #dota2 %s #results@rsltdtk #s%d@rsltdtk",
+				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesText, leagueHashTags, seriesID)
 		} else {
-			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s\n#rsltdtk #dota2 #results@rsltdtk",
-				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName)
+			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s\n#rsltdtk #dota2 %s #results@rsltdtk",
+				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, leagueHashTags)
 		}
 	} else {
 		if seriesID != 0 {
-			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s\n#rsltdtk #dota2 #results@rsltdtk #s%d@rsltdtk",
-				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesID)
+			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s, %s\n#rsltdtk #dota2 %s #results@rsltdtk #s%d@rsltdtk",
+				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesText, leagueHashTags, seriesID)
 		} else {
-			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s\n#rsltdtk #dota2 #results@rsltdtk",
-				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName)
+			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s\n#rsltdtk #dota2 %s #results@rsltdtk",
+				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, leagueHashTags)
 		}
 	}
 }
