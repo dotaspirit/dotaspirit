@@ -103,7 +103,7 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 		graphpw := imagick.NewPixelWand()
 		graphpw.SetColor("none")
 		graphmw.NewImage(970, 114, graphpw)
-		graphpw.SetColor(config.TextDark)
+		graphpw.SetColor(config.Text + "77")
 
 		graphdw.SetStrokeColor(graphpw)
 		graphdw.SetStrokeWidth(2)
@@ -342,12 +342,12 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 
 		playerpw.SetColor(config.Text)
 		playerdw.SetFillColor(playerpw)
+		playerdw.SetFontSize(config.TextSize15)
 
 		playerdw.SetTextAlignment(imagick.ALIGN_LEFT)
 		playerdw.Annotation(10, 148, getRplayerRole(i, matchData.Players[i].LaneRole))
 
 		playerdw.SetTextAlignment(imagick.ALIGN_CENTER)
-		playerdw.SetFontSize(config.TextSize15)
 		playerdw.Annotation(95, 229, fmt.Sprintf("%d / %d / %d", kills, deaths, assists))
 
 		playerpw.SetColor(config.TextGold)
