@@ -53,7 +53,7 @@ type Match struct {
 		Time       int    `json:"time"`
 		Type       string `json:"type"`
 		Slot       int    `json:"slot,omitempty"`
-		Key        int    `json:"key,omitempty"`
+		Key        int    `json:"key,string,omitempty"`
 		PlayerSlot int    `json:"player_slot,omitempty"`
 		Unit       string `json:"unit,omitempty"`
 		Team       int    `json:"team,omitempty"`
