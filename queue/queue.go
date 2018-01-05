@@ -16,6 +16,7 @@ import (
 	"github.com/dotaspirit/dotaspirit/matches"
 	"github.com/dotaspirit/dotaspirit/messages"
 	"github.com/dotaspirit/dotaspirit/types"
+	"github.com/dotaspirit/dotaspirit/utils"
 )
 
 var myClient = &http.Client{Timeout: 10 * time.Second}
@@ -147,7 +148,6 @@ func QueueMatches(ret map[int64]int) {
 				continue
 			}
 			if !appConfig.IsDebug {
-				fmt.Println("asd")
 				err = messages.SendThoseMatches(matchID)
 				if err != nil {
 					log.Println(err)
