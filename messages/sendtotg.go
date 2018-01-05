@@ -5,6 +5,7 @@ import (
 	"log"
 	"strconv"
 
+	"github.com/dotaspirit/dotaspirit/utils"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
@@ -54,8 +55,10 @@ func makeTGText(matchID int64) string {
 }
 
 func SendToTG(matchID int64) {
-	var chatID int64 = -123
-	token := "token"
+	appConfig := utils.LoadAppConfig()
+
+	chatID := appConfig.TgChatID
+	token := appConfig.TgAPIkey
 
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {

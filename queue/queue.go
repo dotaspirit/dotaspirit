@@ -128,6 +128,7 @@ func saveDoneMatches(matchID int64, oldMatches []int64) {
 }
 
 func QueueMatches(ret map[int64]int) {
+	appConfig := utils.LoadAppConfig()
 	matchIDs := getMatches()
 	for i := len(matchIDs) - 1; i >= 0; i-- {
 		matchID := matchIDs[i]
@@ -145,13 +146,16 @@ func QueueMatches(ret map[int64]int) {
 				ret[matchID]++
 				continue
 			}
-			err = messages.SendThoseMatches(matchID)
-			if err != nil {
-				log.Println(err)
-				continue
+			if !appConfig.IsDebug {
+				fmt.Println("asd")
+				err = messages.SendThoseMatches(matchID)
+				if err != nil {
+					log.Println(err)
+					continue
+				}
+				messages.SendToTG(matchID)
+				saveDoneMatches(matchID, oldMatches)
 			}
-			messages.SendToTG(matchID)
-			saveDoneMatches(matchID, oldMatches)
 		}
 	}
 }

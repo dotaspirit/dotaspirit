@@ -124,14 +124,37 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 				}
 			}
 			if radiantDeaths > direDeaths {
-				graphpw.SetColor(config.TextTFRadiant)
+				graphpw.SetColor(config.TextTFRadiant + "99")
 			} else if direDeaths > radiantDeaths {
-				graphpw.SetColor(config.TextTFDire)
+				graphpw.SetColor(config.TextTFDire + "99")
 			} else {
-				graphpw.SetColor(config.TextTF)
+				graphpw.SetColor(config.TextTF + "99")
 			}
 			graphdw.SetStrokeColor(graphpw)
 			graphdw.Line(float64(tf.Start)*scalex, 56, float64(tf.End)*scalex, 56)
+		}
+
+		for _, obj := range matchData.Objectives {
+			if obj.Type == "CHAT_MESSAGE_FIRSTBLOOD" {
+				graphdw.SetStrokeWidth(15)
+				if obj.PlayerSlot < 5 {
+					graphpw.SetColor(config.TextTFDire)
+				} else {
+					graphpw.SetColor(config.TextTFRadiant)
+				}
+				graphdw.SetStrokeColor(graphpw)
+				graphdw.Line(float64(obj.Time)*scalex-1, 56, float64(obj.Time)*scalex+1, 56)
+			}
+			if obj.Type == "CHAT_MESSAGE_ROSHAN_KILL" {
+				graphdw.SetStrokeWidth(15)
+				if obj.Team == 3 {
+					graphpw.SetColor(config.TextTFDire)
+				} else {
+					graphpw.SetColor(config.TextTFRadiant)
+				}
+				graphdw.SetStrokeColor(graphpw)
+				graphdw.Line(float64(obj.Time)*scalex-1, 56, float64(obj.Time)*scalex+1, 56)
+			}
 		}
 
 		scalex = 970 / float64(matchDuration/60)

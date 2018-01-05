@@ -14,9 +14,10 @@ import (
 	"strconv"
 
 	"github.com/dotaspirit/dotaspirit/types"
+	"github.com/dotaspirit/dotaspirit/utils"
 )
 
-// https://oauth.vk.com/authorize?client_id=APP_ID&redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=photos,wall,offline&v=5.65&revoke=1&response_type=token
+// https://oauth.vk.com/authorize?client_id=APP_ID&redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=photos,wall,offline&v=5.69&revoke=1&response_type=token
 
 func loadLeaguesConfig() types.LeaguesConfig {
 	buf := bytes.NewBuffer(nil)
@@ -178,7 +179,7 @@ func vkSavePhoto(upResp types.UploadResponse, groupID int, accessToken string) t
 		url.Values{
 			"group_id":     {strconv.Itoa(groupID)},
 			"access_token": {accessToken},
-			"v":            {"5.65"},
+			"v":            {"5.69"},
 			"server":       {strconv.Itoa(upResp.Server)},
 			"hash":         {upResp.Hash},
 			"photo":        {upResp.Photo}}.Encode())
@@ -194,8 +195,10 @@ func vkSavePhoto(upResp types.UploadResponse, groupID int, accessToken string) t
 }
 
 func SendThoseMatches(matchID int64) (err error) {
-	groupID := 123
-	accessToken := "token"
+	appConfig := utils.LoadAppConfig()
+
+	groupID := appConfig.VkGroupID
+	accessToken := appConfig.VkAPIkey
 
 	upServer := vkGetWallUploadServer(groupID, accessToken)
 	upLink := postFile("tmp/images/"+strconv.FormatInt(matchID, 10)+".png", upServer.Response.UploadURL)
@@ -204,7 +207,7 @@ func SendThoseMatches(matchID int64) (err error) {
 	_, err = http.Get("https://api.vk.com/method/" + "wall.post?" +
 		url.Values{"owner_id": {strconv.Itoa(-groupID)},
 			"access_token": {accessToken},
-			"v":            {"5.65"},
+			"v":            {"5.69"},
 			"message":      {makeVkText(matchID)},
 			"attachments":  {"photo" + strconv.Itoa(upPhoto.Response[0].OwnerID) + "_" + strconv.Itoa(upPhoto.Response[0].ID) + ",https://www.opendota.com/matches/" + strconv.FormatInt(matchID, 10) + "/"},
 			"from_group":   {"1"}}.Encode())
