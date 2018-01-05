@@ -50,13 +50,13 @@ type Match struct {
 	MatchSeqNum    int64 `json:"match_seq_num"`
 	NegativeVotes  int   `json:"negative_votes"`
 	Objectives     []struct {
-		Time       int    `json:"time"`
-		Type       string `json:"type"`
-		Slot       int    `json:"slot,omitempty"`
-		Key        int    `json:"key,string,omitempty"`
-		PlayerSlot int    `json:"player_slot,omitempty"`
-		Unit       string `json:"unit,omitempty"`
-		Team       int    `json:"team,omitempty"`
+		Time       int         `json:"time"`
+		Type       string      `json:"type"`
+		Slot       int         `json:"slot,omitempty"`
+		Key        interface{} `json:"key,omitempty"`
+		PlayerSlot int         `json:"player_slot,omitempty"`
+		Unit       string      `json:"unit,omitempty"`
+		Team       int         `json:"team,omitempty"`
 	} `json:"objectives"`
 	PicksBans []struct {
 		IsPick  bool  `json:"is_pick"`
