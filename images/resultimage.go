@@ -436,9 +436,9 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 	radiantPicksdw := imagick.NewDrawingWand()
 
 	direPickspw.SetColor("none")
-	direPicksmw.NewImage(965, 52, direPickspw)
+	direPicksmw.NewImage(965, 46, direPickspw)
 	radiantPickspw.SetColor("none")
-	radiantPicksmw.NewImage(965, 52, radiantPickspw)
+	radiantPicksmw.NewImage(965, 46, radiantPickspw)
 
 	for i := range matchData.PicksBans {
 		heroImage := imagick.NewMagickWand()
@@ -448,13 +448,13 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 		} else {
 			heroImage.ReadImage(fmt.Sprintf("./assets/heroes/bw/%d.png", matchData.PicksBans[i].HeroID))
 		}
-		heroImage.ResizeImage(92, 52, imagick.FILTER_CUBIC, 1)
+		heroImage.ResizeImage(83, 46, imagick.FILTER_CUBIC, 1)
 		if matchData.PicksBans[i].Team == 1 {
 			var text string
-			direPicksmw.CompositeImage(heroImage, imagick.COMPOSITE_OP_OVER, dir*97, 0)
+			direPicksmw.CompositeImage(heroImage, imagick.COMPOSITE_OP_OVER, dir*88, 0)
 			direPickspw.SetColor("#000000AA")
 			direPicksdw.SetFillColor(direPickspw)
-			direPicksdw.Rectangle(float64(dir*97), float64(40), float64(dir*97+91), float64(52))
+			direPicksdw.Rectangle(float64(dir*88), float64(34), float64(dir*88+83), float64(46))
 
 			direPickspw.SetColor(config.Text)
 			direPicksdw.SetFillColor(direPickspw)
@@ -465,14 +465,14 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 			} else {
 				text = "BAN " + strconv.Itoa(matchData.PicksBans[i].Order+1)
 			}
-			direPicksdw.Annotation(float64(dir*97+46), float64(50), text)
+			direPicksdw.Annotation(float64(dir*88+44), float64(44), text)
 			dir++
 		} else {
 			var text string
-			radiantPicksmw.CompositeImage(heroImage, imagick.COMPOSITE_OP_OVER, rad*97, 0)
+			radiantPicksmw.CompositeImage(heroImage, imagick.COMPOSITE_OP_OVER, rad*88, 0)
 			radiantPickspw.SetColor("#000000AA")
 			radiantPicksdw.SetFillColor(radiantPickspw)
-			radiantPicksdw.Rectangle(float64(rad*97), float64(40), float64(rad*97+91), float64(52))
+			radiantPicksdw.Rectangle(float64(rad*88), float64(34), float64(rad*88+83), float64(46))
 
 			radiantPickspw.SetColor(config.Text)
 			radiantPicksdw.SetFillColor(radiantPickspw)
@@ -483,7 +483,7 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 			} else {
 				text = "BAN " + strconv.Itoa(matchData.PicksBans[i].Order+1)
 			}
-			radiantPicksdw.Annotation(float64(rad*97+46), float64(50), text)
+			radiantPicksdw.Annotation(float64(rad*88+44), float64(44), text)
 			rad++
 		}
 	}
@@ -492,8 +492,8 @@ func MakeResultImage(matchID int64, ret map[int64]int) (err error) {
 	// radiantPicksmw.WriteImage("./tmp/radiant_picks.png")
 	// direPicksmw.WriteImage("./tmp/dire_picks.png")
 
-	mw.CompositeImage(direPicksmw, imagick.COMPOSITE_OP_OVER, 28, 362)
-	mw.CompositeImage(radiantPicksmw, imagick.COMPOSITE_OP_OVER, 28, 606)
+	mw.CompositeImage(direPicksmw, imagick.COMPOSITE_OP_OVER, 28, 366)
+	mw.CompositeImage(radiantPicksmw, imagick.COMPOSITE_OP_OVER, 28, 608)
 	radiantPicksmw.Destroy()
 	direPicksmw.Destroy()
 	radiantPlayersmw.Destroy()
