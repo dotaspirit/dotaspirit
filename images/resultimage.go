@@ -11,7 +11,7 @@ import (
 
 	"github.com/dotaspirit/dotaspirit/types"
 
-	"gopkg.in/gographics/imagick.v2/imagick"
+	"gopkg.in/gographics/imagick.v1/imagick"
 )
 
 func getRplayerRole(pos, role int) string {
