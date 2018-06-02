@@ -153,7 +153,7 @@ func QueueMatches(ret map[int64]int) {
 					log.Println(err)
 					continue
 				}
-				messages.SendToTG(matchID)
+				//messages.SendToTG(matchID)
 				saveDoneMatches(matchID, oldMatches)
 			}
 		}
