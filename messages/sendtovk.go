@@ -121,7 +121,7 @@ func vkGetWallUploadServer(groupID int, accessToken string) types.GetWallUploadS
 	resp, err := http.Get("https://api.vk.com/method/" + "photos.getWallUploadServer?" +
 		url.Values{
 			"access_token": {accessToken},
-			"v":            {"5.65"},
+			"v":            {"5.78"},
 			"group_id":     {strconv.Itoa(groupID)}}.Encode())
 	if err != nil {
 		log.Fatal(err)
@@ -179,7 +179,7 @@ func vkSavePhoto(upResp types.UploadResponse, groupID int, accessToken string) t
 		url.Values{
 			"group_id":     {strconv.Itoa(groupID)},
 			"access_token": {accessToken},
-			"v":            {"5.69"},
+			"v":            {"5.78"},
 			"server":       {strconv.Itoa(upResp.Server)},
 			"hash":         {upResp.Hash},
 			"photo":        {upResp.Photo}}.Encode())
@@ -207,7 +207,7 @@ func SendThoseMatches(matchID int64) (err error) {
 	_, err = http.Get("https://api.vk.com/method/" + "wall.post?" +
 		url.Values{"owner_id": {strconv.Itoa(-groupID)},
 			"access_token": {accessToken},
-			"v":            {"5.69"},
+			"v":            {"5.78"},
 			"message":      {makeVkText(matchID)},
 			"attachments":  {"photo" + strconv.Itoa(upPhoto.Response[0].OwnerID) + "_" + strconv.Itoa(upPhoto.Response[0].ID) + ",https://www.opendota.com/matches/" + strconv.FormatInt(matchID, 10) + "/"},
 			"from_group":   {"1"}}.Encode())
