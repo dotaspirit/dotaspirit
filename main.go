@@ -1,18 +1,30 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"log"
+	"net/http"
 
-	"github.com/dotaspirit/dotaspirit/queue"
+	"github.com/rs/cors"
 )
 
+var (
+	appconfig = appConfig{}
+	dao       = dbDao{}
+)
+
+func init() {
+	loadConfig("config/app.json", &appconfig)
+	dao.Server = appconfig.DBServer
+	dao.Database = appconfig.DBName
+	dao.connect()
+}
+
 func main() {
-	fmt.Println("Starting...")
-	ret := make(map[int64]int)
-	for {
-		fmt.Println("Cycle")
-		queue.QueueMatches(ret)
-		time.Sleep(time.Minute)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", webhoookHandler)
+	srv := &http.Server{
+		Addr:    ":3682",
+		Handler: cors.Default().Handler(mux),
 	}
+	log.Fatal(srv.ListenAndServe())
 }

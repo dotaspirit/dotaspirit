@@ -1,0 +1,9 @@
+{
+  "vkGroupId": 123,
+  "vkAPIkey": "123",
+  "tgChatID": -123,
+  "tgAPIkey": "123",
+  "dbName": "name",
+  "dbServer": "server",
+  "isDebug": true
+}
