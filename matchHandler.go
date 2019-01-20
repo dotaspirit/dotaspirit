@@ -16,10 +16,14 @@ func handleMatch(whData webhookData) {
 		log.Println("Full match data wasn't posted")
 		matchData := getMatchData(matchID)
 		matchText := makeMatchText(matchData)
-		if whData.Origin == "scanner" && dbMatchData.IsShort != true {
-			log.Println("Data from scanner and it's not posted yet")
-			makeMatchImage(matchData, false)
-			sendMatchToVk(matchID, matchText, false)
+		if whData.Origin == "scanner" {
+			if dbMatchData.IsShort != true {
+				log.Println("Data from scanner and it's not posted yet")
+				makeMatchImage(matchData, false)
+				sendMatchToVk(matchID, matchText, false)
+			} else {
+				log.Println("Data from scanner and it was posted")
+			}
 		} else if whData.Origin == "" {
 			log.Println("Data from parser")
 			makeMatchImage(matchData, true)
