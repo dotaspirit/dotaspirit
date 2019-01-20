@@ -10,8 +10,7 @@ func handleMatch(whData webhookData) {
 	if dbMatchData.IsFull != true {
 		matchData := getMatchData(matchID)
 		matchText := makeMatchText(matchData)
-		if whData.Origin == "scanner" && (dbMatchData.IsShort != true ||
-			dbMatchData.IsFull != true) {
+		if whData.Origin == "scanner" && dbMatchData.IsShort != true {
 			makeMatchImage(matchData, false)
 			sendMatchToVk(matchID, matchText, false)
 		} else if whData.Origin == "" {
