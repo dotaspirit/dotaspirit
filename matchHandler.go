@@ -31,6 +31,8 @@ func handleMatch(whData webhookData) {
 				sendMatchToVk(matchID, matchText, true)
 			}
 		}
+	} else {
+		log.Println("Full data was posted nothing to do here")
 	}
 
 }
