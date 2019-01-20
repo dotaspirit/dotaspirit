@@ -1,30 +1,33 @@
 package main
 
-import "log"
+import (
+	"log"
+)
 
 func handleMatch(whData webhookData) {
 	matchID := whData.MatchID
+	log.Printf("Received match %d from webhook", matchID)
 	dbMatchData, _ := dao.get(dbMatch{MatchID: matchID})
 	if dbMatchData.MatchID != matchID {
 		addMatch(matchID)
 	}
 
 	if dbMatchData.IsFull != true {
+		log.Println("Full match data wasn't posted")
 		matchData := getMatchData(matchID)
 		matchText := makeMatchText(matchData)
-		log.Println("match data is not full")
 		if whData.Origin == "scanner" && dbMatchData.IsShort != true {
-			log.Println("data from scanner and it's not posted yet")
+			log.Println("Data from scanner and it's not posted yet")
 			makeMatchImage(matchData, false)
 			sendMatchToVk(matchID, matchText, false)
 		} else if whData.Origin == "" {
-			log.Println("data from parser")
+			log.Println("Data from parser")
 			makeMatchImage(matchData, true)
 			if dbMatchData.IsShort == true {
-				log.Println("data was posted, now editing")
+				log.Println("Data was posted, now editing")
 				editMatchAtVk(matchID, dbMatchData.PostID, matchText)
 			} else {
-				log.Println("data was never posted, now posting")
+				log.Println("Data never posted, now posting")
 				sendMatchToVk(matchID, matchText, true)
 			}
 		}
