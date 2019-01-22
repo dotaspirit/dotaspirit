@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/rs/cors"
+
+	_ "net/http/pprof"
 )
 
 var (
