@@ -29,6 +29,7 @@ func getPlayerRole(pos, role int) string {
 
 func guessFontSize(fontName string, maxFontSize, minFontSize float64, maxHeight, maxWidth float64, text string) float64 {
 	mw := imagick.NewMagickWand()
+	defer mw.Destroy()
 	dw := imagick.NewDrawingWand()
 	defer dw.Destroy()
 	pw := imagick.NewPixelWand()
@@ -50,7 +51,6 @@ func guessFontSize(fontName string, maxFontSize, minFontSize float64, maxHeight,
 		}
 	}
 
-	defer mw.Destroy()
 	return fontSize
 }
 
