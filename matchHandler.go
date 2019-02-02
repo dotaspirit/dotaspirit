@@ -15,7 +15,7 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 		if len(matchData.RadiantGoldAdv) != 0 && len(matchData.PicksBans) != 0 {
 			log.Printf("Found full match %d data", matchID)
 			matchText := makeMatchText(matchData)
-			makeMatchImage(matchData, false)
+			makeMatchImage(matchData, true)
 			dbMatchData, _ := dao.get(dbMatch{MatchID: matchID})
 			editMatchAtVk(matchID, dbMatchData.PostID, matchText)
 			hasSend = true
