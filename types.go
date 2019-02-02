@@ -16,23 +16,27 @@ type oDotaMatchData struct {
 		Tag     string `json:"tag"`
 		LogoURL string `json:"logo_url"`
 	} `json:"radiant_team"`
-	RadiantScore   int   `json:"radiant_score"`
-	RadiantWin     bool  `json:"radiant_win"`
-	RadiantGoldAdv []int `json:"radiant_gold_adv"`
-	RadiantXpAdv   []int `json:"radiant_xp_adv"`
+	RadiantName    string `json:"radiant_name"`
+	RadiantScore   int    `json:"radiant_score"`
+	RadiantWin     bool   `json:"radiant_win"`
+	RadiantGoldAdv []int  `json:"radiant_gold_adv"`
+	RadiantXpAdv   []int  `json:"radiant_xp_adv"`
 	DireTeam       struct {
 		TeamID  int    `json:"team_id"`
 		Name    string `json:"name"`
 		Tag     string `json:"tag"`
 		LogoURL string `json:"logo_url"`
 	} `json:"dire_team"`
-	DireScore int `json:"dire_score"`
+	DireName  string `json:"dire_name"`
+	DireScore int    `json:"dire_score"`
 	Players   []struct {
 		HeroDamage  int    `json:"hero_damage"`
 		HeroHealing int    `json:"hero_healing"`
 		Level       int    `json:"level"`
 		HeroID      int    `json:"hero_id"`
 		TotalGold   int    `json:"total_gold"`
+		Gold        int    `json:"gold"`
+		GoldSpent   int    `json:"gold_spent"`
 		Kills       int    `json:"kills"`
 		Deaths      int    `json:"deaths"`
 		Assists     int    `json:"assists"`

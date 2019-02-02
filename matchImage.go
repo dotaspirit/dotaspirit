@@ -248,6 +248,14 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	radiantName := matchData.RadiantTeam.Name
 	direName := matchData.DireTeam.Name
+
+	if radiantName == "" {
+		radiantName = matchData.RadiantName
+	}
+	if direName == "" {
+		direName = matchData.DireName
+	}
+
 	if radiantName == "" {
 		radiantName = "Radiant"
 	}
@@ -306,6 +314,10 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		playerpw := imagick.NewPixelWand()
 		defer playerpw.Destroy()
 		var gold = prettifyBigValues(matchData.Players[i].TotalGold)
+		if gold == "0" {
+			goldAPI := matchData.Players[i].Gold + matchData.Players[i].GoldSpent
+			gold = prettifyBigValues(goldAPI)
+		}
 		var damage = prettifyBigValues(matchData.Players[i].HeroDamage)
 		var healing = prettifyBigValues(matchData.Players[i].HeroHealing)
 		var level = strconv.Itoa(matchData.Players[i].Level)
