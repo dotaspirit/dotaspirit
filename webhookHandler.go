@@ -8,6 +8,7 @@ import (
 
 func webhoookHandler(rw http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
+	defer req.Body.Close()
 	if err != nil {
 		panic(err)
 	}
