@@ -24,17 +24,16 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 	}
 }
 
-func handleMatch(whData webhookData) {
+func handleMatch(whData oDotaMatchData) {
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
 	dbMatchData, _ := dao.get(dbMatch{MatchID: matchID})
 	if dbMatchData.MatchID != matchID {
 		addMatch(matchID)
 	}
-
 	if dbMatchData.IsFull != true {
 		log.Println("Full match data wasn't posted")
-		matchData := getMatchData(matchID)
+		matchData := whData
 		matchText := makeMatchText(matchData)
 		if whData.Origin == "scanner" {
 			if dbMatchData.IsShort != true {
@@ -48,6 +47,7 @@ func handleMatch(whData webhookData) {
 			}
 		} else if whData.Origin == "" {
 			log.Println("Data from parser")
+			matchData := getMatchData(matchID)
 			makeMatchImage(matchData, true)
 			if dbMatchData.IsShort == true {
 				log.Println("Data was posted, now editing")

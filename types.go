@@ -1,10 +1,5 @@
 package main
 
-type webhookData struct {
-	MatchID int64  `json:"match_id"`
-	Origin  string `json:"origin"`
-}
-
 type oDotaMatchData struct {
 	MatchID  int64 `json:"match_id"`
 	Duration int   `json:"duration"`
@@ -97,6 +92,7 @@ type oDotaMatchData struct {
 		Unit       string `json:"unit,omitempty"`
 		Team       int    `json:"team,omitempty"`
 	} `json:"objectives"`
+	Origin string `json:"origin"`
 }
 
 type colorConfig struct {

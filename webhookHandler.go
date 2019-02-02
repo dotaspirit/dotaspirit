@@ -12,7 +12,7 @@ func webhoookHandler(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	var whData webhookData
+	var whData oDotaMatchData
 	err = json.Unmarshal(body, &whData)
 	if err != nil {
 		panic(err)
