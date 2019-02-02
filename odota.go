@@ -16,3 +16,17 @@ func getMatchData(matchID int64) oDotaMatchData {
 	getJSON(matchURL, &matchData)
 	return matchData
 }
+
+func getLeaguesData() oDotaLeaguesData {
+	var leaguesData oDotaLeaguesData
+	leaguesURL := fmt.Sprintf("%s%s", apiURL, "leagues")
+	getJSON(leaguesURL, &leaguesData)
+	return leaguesData
+}
+
+func getPlayersData() oDotaPlayersData {
+	var playersData oDotaPlayersData
+	playersURL := fmt.Sprintf("%s%s", apiURL, "proPlayers")
+	getJSON(playersURL, &playersData)
+	return playersData
+}

@@ -27,6 +27,27 @@ func getPlayerRole(pos, role int) string {
 	return roleNames[role]
 }
 
+func getPlayerName(accountID int, playersData oDotaPlayersData) string {
+	for _, player := range playersData {
+		if player.AccountID == accountID {
+			if player.Name != "" {
+				return player.Name
+			}
+			return player.Personaname
+		}
+	}
+	return "Player"
+}
+
+func getLeagueName(leagueID int, leaguesData oDotaLeaguesData) string {
+	for _, league := range leaguesData {
+		if league.Leagueid == leagueID {
+			return league.Name
+		}
+	}
+	return "League"
+}
+
 func guessFontSize(fontName string, maxFontSize, minFontSize float64, maxHeight, maxWidth float64, text string) float64 {
 	mw := imagick.NewMagickWand()
 	defer mw.Destroy()
@@ -74,6 +95,14 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	err := loadConfig("config/colors.json", &cConfig)
 	if err != nil {
 		log.Println(err.Error())
+	}
+
+	var playersData oDotaPlayersData
+	var leaguesData oDotaLeaguesData
+
+	if isFull != true {
+		playersData = getPlayersData()
+		leaguesData = getLeaguesData()
 	}
 
 	var sMatchID = strconv.FormatInt(matchData.MatchID, 10)
@@ -236,7 +265,11 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	dw.SetTextAlignment(imagick.ALIGN_LEFT)
 	dw.Annotation(25, 63, fmt.Sprintf("%d:%02d:%02d", hours, minutes, seconds))
-	dw.Annotation(25, 986, matchData.League.Name)
+	if isFull == true {
+		dw.Annotation(25, 986, matchData.League.Name)
+	} else {
+		dw.Annotation(25, 986, getLeagueName(matchData.League.Leagueid, leaguesData))
+	}
 	dw.SetTextAlignment(imagick.ALIGN_RIGHT)
 	dw.Annotation(995, 63, sMatchID)
 	dw.Annotation(995, 986, "#rsltdtk")
@@ -368,11 +401,16 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 		playerdw.SetFont("Noto-Sans-CJK-TC-Regular")
 		var name string
-		if matchData.Players[i].Name == "" {
-			name = matchData.Players[i].Personaname
+		if isFull == true {
+			if matchData.Players[i].Name == "" {
+				name = matchData.Players[i].Personaname
+			} else {
+				name = matchData.Players[i].Name
+			}
 		} else {
-			name = matchData.Players[i].Name
+			getPlayerName(matchData.Players[i].AccountID, playersData)
 		}
+
 		fontSize := guessFontSize("Noto-Sans-CJK-TC-Regular", cConfig.TextSize12, 10, 45, 185, name)
 		playerdw.SetFontSize(fontSize)
 		playerdw.Annotation(95, 30, name)

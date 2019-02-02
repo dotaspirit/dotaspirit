@@ -1,5 +1,16 @@
 package main
 
+type oDotaLeaguesData []struct {
+	Leagueid int    `json:"leagueid"`
+	Name     string `json:"name"`
+}
+
+type oDotaPlayersData []struct {
+	AccountID   int    `json:"account_id"`
+	Personaname string `json:"personaname"`
+	Name        string `json:"name"`
+}
+
 type oDotaMatchData struct {
 	MatchID  int64 `json:"match_id"`
 	Duration int   `json:"duration"`
@@ -30,6 +41,7 @@ type oDotaMatchData struct {
 	DireName  string `json:"dire_name"`
 	DireScore int    `json:"dire_score"`
 	Players   []struct {
+		AccountID   int    `json:"account_id"`
 		HeroDamage  int    `json:"hero_damage"`
 		HeroHealing int    `json:"hero_healing"`
 		Level       int    `json:"level"`
