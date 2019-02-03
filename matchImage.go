@@ -441,7 +441,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		playerdw.Circle(173, 140, 186, 140)
 		playerpw.SetColor(cConfig.TextGold)
 		playerdw.SetFillColor(playerpw)
-		playerdw.Annotation(175, 148, level)
+		playerdw.Annotation(174, 148, level)
 
 		if healing == "0" {
 			playerdw.SetTextAlignment(imagick.ALIGN_RIGHT)
