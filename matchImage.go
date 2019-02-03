@@ -132,8 +132,11 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	if isFull {
 		graphmw := imagick.NewMagickWand()
+		defer graphmw.Destroy()
 		graphdw := imagick.NewDrawingWand()
+		defer graphdw.Destroy()
 		graphpw := imagick.NewPixelWand()
+		defer graphpw.Destroy()
 		graphpw.SetColor("none")
 		graphmw.NewImage(970, 114, graphpw)
 		graphpw.SetColor(cConfig.Text + "77")
@@ -250,9 +253,6 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		graphmw.DrawImage(graphdw)
 		mw.CompositeImage(graphmw, imagick.COMPOSITE_OP_OVER, true, 25, 453)
 		// graphmw.WriteImage("./tmp/graph.png")
-		graphmw.Destroy()
-		graphdw.Destroy()
-		graphpw.Destroy()
 	}
 
 	// GRAPH
@@ -318,22 +318,26 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	// WINNER IMAGE
 
 	winnerImage := imagick.NewMagickWand()
+	defer winnerImage.Destroy()
 	winnerImage.ReadImage("assets/images/winner.png")
 	if matchData.RadiantWin == true {
 		mw.CompositeImage(winnerImage, imagick.COMPOSITE_OP_OVER, true, 25, 541)
 	} else {
 		mw.CompositeImage(winnerImage, imagick.COMPOSITE_OP_OVER, true, 25, 441)
 	}
-	winnerImage.Destroy()
 
 	// WINNER IMAGE
 
 	// PLAYERS
 
 	direPlayersmw := imagick.NewMagickWand()
+	defer direPlayersmw.Destroy()
 	direPlayerspw := imagick.NewPixelWand()
+	defer direPlayerspw.Destroy()
 	radiantPlayersmw := imagick.NewMagickWand()
+	defer radiantPlayersmw.Destroy()
 	radiantPlayerspw := imagick.NewPixelWand()
+	defer radiantPlayerspw.Destroy()
 
 	direPlayerspw.SetColor("none")
 	direPlayersmw.NewImage(970, 257, direPlayerspw)
@@ -363,10 +367,10 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		playermw.NewImage(190, 257, playerpw)
 
 		heroImage := imagick.NewMagickWand()
+		defer heroImage.Destroy()
 		heroImage.ReadImage(fmt.Sprintf("assets/heroes/%d.png", matchData.Players[i].HeroID))
 		heroImage.ResizeImage(190, 107, imagick.FILTER_CUBIC)
 		playermw.CompositeImage(heroImage, imagick.COMPOSITE_OP_OVER, true, 0, 50)
-		heroImage.Destroy()
 
 		playerpw.SetColor(cConfig.PlayerColor[i])
 		playerdw.SetFillColor(playerpw)
@@ -411,7 +415,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 			name = getPlayerName(matchData.Players[i].AccountID, playersData)
 		}
 
-		fontSize := guessFontSize("Noto-Sans-CJK-TC-Regular", cConfig.TextSize12, 10, 45, 185, name)
+		fontSize := guessFontSize("Noto-Sans-CJK-TC-Regular", cConfig.TextSize12, 10, 50, 180, name)
 		playerdw.SetFontSize(fontSize)
 		playerdw.Annotation(95, 30, name)
 
@@ -478,10 +482,6 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	// radiantPlayersmw.WriteImage("./tmp/radiant_players.png")
 	mw.CompositeImage(direPlayersmw, imagick.COMPOSITE_OP_OVER, true, 25, 100)
 	mw.CompositeImage(radiantPlayersmw, imagick.COMPOSITE_OP_OVER, true, 25, 663)
-	direPlayersmw.Destroy()
-	direPlayerspw.Destroy()
-	radiantPlayersmw.Destroy()
-	radiantPlayerspw.Destroy()
 
 	// PLAYERS
 
@@ -491,11 +491,17 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	var rad int
 
 	direPicksmw := imagick.NewMagickWand()
+	defer direPicksmw.Destroy()
 	direPickspw := imagick.NewPixelWand()
+	defer direPickspw.Destroy()
 	direPicksdw := imagick.NewDrawingWand()
+	defer direPicksdw.Destroy()
 	radiantPicksmw := imagick.NewMagickWand()
+	defer radiantPicksmw.Destroy()
 	radiantPickspw := imagick.NewPixelWand()
+	defer radiantPickspw.Destroy()
 	radiantPicksdw := imagick.NewDrawingWand()
+	defer radiantPicksdw.Destroy()
 
 	direPickspw.SetColor("none")
 	direPicksmw.NewImage(965, 46, direPickspw)
@@ -555,9 +561,6 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	mw.CompositeImage(direPicksmw, imagick.COMPOSITE_OP_OVER, true, 28, 366)
 	mw.CompositeImage(radiantPicksmw, imagick.COMPOSITE_OP_OVER, true, 28, 608)
-	radiantPicksmw.Destroy()
-	direPicksmw.Destroy()
-	direPlayerspw.Destroy()
 
 	// PICKS
 
