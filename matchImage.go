@@ -364,10 +364,11 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		playermw.NewImage(190, 257, playerpw)
 
 		heroImage := imagick.NewMagickWand()
-		defer heroImage.Destroy()
+
 		heroImage.ReadImage(fmt.Sprintf("assets/heroes/%d.png", matchData.Players[i].HeroID))
 		heroImage.ResizeImage(190, 107, imagick.FILTER_CUBIC)
 		playermw.CompositeImage(heroImage, imagick.COMPOSITE_OP_OVER, true, 0, 50)
+		heroImage.Destroy()
 
 		playerpw.SetColor(cConfig.PlayerColor[i])
 		playerdw.SetFillColor(playerpw)
