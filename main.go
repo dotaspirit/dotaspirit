@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/rs/cors"
+	"gopkg.in/gographics/imagick.v3/imagick"
 
 	_ "net/http/pprof"
 )
@@ -19,6 +20,8 @@ func init() {
 	dao.Server = appconfig.DBServer
 	dao.Database = appconfig.DBName
 	dao.connect()
+	imagick.Initialize()
+	defer imagick.Terminate()
 }
 
 func main() {
