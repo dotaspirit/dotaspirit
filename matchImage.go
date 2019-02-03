@@ -507,7 +507,6 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	for i := range matchData.PicksBans {
 		heroImage := imagick.NewMagickWand()
-		defer heroImage.Destroy()
 		if matchData.PicksBans[i].IsPick {
 			heroImage.ReadImage(fmt.Sprintf("./assets/heroes/%d.png", matchData.PicksBans[i].HeroID))
 		} else {
@@ -517,6 +516,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		if matchData.PicksBans[i].Team == 1 {
 			var text string
 			direPicksmw.CompositeImage(heroImage, imagick.COMPOSITE_OP_OVER, true, dir*88, 0)
+			heroImage.Destroy()
 			direPickspw.SetColor("#000000AA")
 			direPicksdw.SetFillColor(direPickspw)
 			direPicksdw.Rectangle(float64(dir*88), float64(34), float64(dir*88+83), float64(46))
@@ -535,6 +535,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		} else {
 			var text string
 			radiantPicksmw.CompositeImage(heroImage, imagick.COMPOSITE_OP_OVER, true, rad*88, 0)
+			heroImage.Destroy()
 			radiantPickspw.SetColor("#000000AA")
 			radiantPicksdw.SetFillColor(radiantPickspw)
 			radiantPicksdw.Rectangle(float64(rad*88), float64(34), float64(rad*88+83), float64(46))
