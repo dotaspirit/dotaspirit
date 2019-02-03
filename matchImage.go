@@ -268,7 +268,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	if isFull == true {
 		dw.Annotation(25, 986, matchData.League.Name)
 	} else {
-		dw.Annotation(25, 986, getLeagueName(matchData.League.Leagueid, leaguesData))
+		dw.Annotation(25, 986, getLeagueName(matchData.Leagueid, leaguesData))
 	}
 	dw.SetTextAlignment(imagick.ALIGN_RIGHT)
 	dw.Annotation(995, 63, sMatchID)
@@ -408,7 +408,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 				name = matchData.Players[i].Name
 			}
 		} else {
-			getPlayerName(matchData.Players[i].AccountID, playersData)
+			name = getPlayerName(matchData.Players[i].AccountID, playersData)
 		}
 
 		fontSize := guessFontSize("Noto-Sans-CJK-TC-Regular", cConfig.TextSize12, 10, 45, 185, name)

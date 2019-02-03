@@ -14,6 +14,7 @@ type oDotaPlayersData []struct {
 type oDotaMatchData struct {
 	MatchID  int64 `json:"match_id"`
 	Duration int   `json:"duration"`
+	Leagueid int   `json:"leagueid"`
 	League   struct {
 		Leagueid int         `json:"leagueid"`
 		Ticket   interface{} `json:"ticket"`
