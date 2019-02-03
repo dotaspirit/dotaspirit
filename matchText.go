@@ -18,10 +18,22 @@ func makeMatchText(matchData oDotaMatchData) string {
 	seriesType := matchData.SeriesType
 
 	if radiantName == "" {
+		radiantName = matchData.RadiantName
+	}
+	if direName == "" {
+		direName = matchData.DireName
+	}
+
+	if radiantName == "" {
 		radiantName = "Radiant"
 	}
 	if direName == "" {
 		direName = "Dire"
+	}
+
+	if leagueName == "" {
+		leaguesData := getLeaguesData()
+		leagueName = getLeagueName(matchData.Leagueid, leaguesData)
 	}
 
 	seriesText := seriesTypeToText(seriesType)
