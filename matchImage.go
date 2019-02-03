@@ -49,6 +49,9 @@ func getLeagueName(leagueID int, leaguesData oDotaLeaguesData) string {
 }
 
 func guessFontSize(fontName string, maxFontSize, minFontSize float64, maxHeight, maxWidth float64, text string) float64 {
+	imagick.Initialize()
+	defer imagick.Terminate()
+
 	mw := imagick.NewMagickWand()
 	defer mw.Destroy()
 	dw := imagick.NewDrawingWand()
