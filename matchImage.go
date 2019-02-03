@@ -508,9 +508,10 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	for i := range matchData.PicksBans {
 		heroImage := imagick.NewMagickWand()
 		defer heroImage.Destroy()
-		heroImage.ReadImage(fmt.Sprintf("./assets/heroes/%d.png", matchData.PicksBans[i].HeroID))
-		if matchData.PicksBans[i].IsPick == false {
-			heroImage, _ = heroImage.FxImage("intensity")
+		if matchData.PicksBans[i].IsPick {
+			heroImage.ReadImage(fmt.Sprintf("./assets/heroes/%d.png", matchData.PicksBans[i].HeroID))
+		} else {
+			heroImage.ReadImage(fmt.Sprintf("./assets/heroes/bw/%d.png", matchData.PicksBans[i].HeroID))
 		}
 		heroImage.ResizeImage(83, 46, imagick.FILTER_CUBIC)
 		if matchData.PicksBans[i].Team == 1 {
