@@ -13,6 +13,10 @@ func webhoookHandler(rw http.ResponseWriter, req *http.Request) {
 		rw.Write([]byte(`{"status":"fail"}`))
 		panic(err)
 	}
+	if len(body) == 0 {
+		rw.Write([]byte(`{"status":"fail"}`))
+		panic(err)
+	}
 	var whData oDotaMatchData
 	err = json.Unmarshal(body, &whData)
 	if err != nil {
