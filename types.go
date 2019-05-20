@@ -29,6 +29,7 @@ type oDotaMatchData struct {
 		LogoURL string `json:"logo_url"`
 	} `json:"radiant_team"`
 	RadiantName    string `json:"radiant_name"`
+	RadiantTeamID  int    `json:"radiant_team_id"`
 	RadiantScore   int    `json:"radiant_score"`
 	RadiantWin     bool   `json:"radiant_win"`
 	RadiantGoldAdv []int  `json:"radiant_gold_adv"`
@@ -39,9 +40,10 @@ type oDotaMatchData struct {
 		Tag     string `json:"tag"`
 		LogoURL string `json:"logo_url"`
 	} `json:"dire_team"`
-	DireName  string `json:"dire_name"`
-	DireScore int    `json:"dire_score"`
-	Players   []struct {
+	DireName   string `json:"dire_name"`
+	DireTeamID int    `json:"dire_team_id"`
+	DireScore  int    `json:"dire_score"`
+	Players    []struct {
 		AccountID   int    `json:"account_id"`
 		HeroDamage  int    `json:"hero_damage"`
 		HeroHealing int    `json:"hero_healing"`

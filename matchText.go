@@ -9,17 +9,17 @@ func seriesTypeToText(id int) string {
 
 func teamsToVS(radiantTeam, direTeam int) string {
 	if radiantTeam > direTeam {
-		return fmt.Sprintf("#t%dvs%drsltdtk", direTeam, radiantTeam)
+		return fmt.Sprintf("#t%dvs%d@rsltdtk", direTeam, radiantTeam)
 	} else {
-		return fmt.Sprintf("#t%dvs%drsltdtk", radiantTeam, direTeam)
+		return fmt.Sprintf("#t%dvs%d@rsltdtk", radiantTeam, direTeam)
 	}
 }
 
 func makeMatchText(matchData oDotaMatchData) string {
 	radiantName := matchData.RadiantTeam.Name
 	direName := matchData.DireTeam.Name
-	radiantID := matchData.RadiantTeam.TeamID
-	direID := matchData.DireTeam.TeamID
+	radiantID := matchData.RadiantTeamID
+	direID := matchData.DireTeamID
 	radiantScore := matchData.RadiantScore
 	direScore := matchData.DireScore
 	hours, minutes, seconds := secondsToTime(matchData.Duration)
