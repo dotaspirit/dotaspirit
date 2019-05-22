@@ -8,8 +8,10 @@ import (
 func handleGetFullMatchData(matchID int64, startTime time.Time) {
 	currentTime := time.Now()
 	hasSend := false
-	for currentTime.Sub(startTime) < time.Hour*24 && hasSend == false {
+	retries := 0
+	for currentTime.Sub(startTime) < time.Hour*24 && !hasSend {
 		time.Sleep(5 * time.Minute)
+		retries++
 		log.Printf("Retrying getting full match %d data", matchID)
 		matchData := getMatchData(matchID)
 		if len(matchData.RadiantGoldAdv) != 0 && len(matchData.PicksBans) != 0 {
@@ -19,6 +21,9 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 			dbMatchData, _ := dao.get(dbMatch{MatchID: matchID})
 			editMatchAtVk(matchID, dbMatchData.PostID, matchText)
 			hasSend = true
+		}
+		if retries%12 == 0 {
+			forceScan(matchID)
 		}
 		currentTime = time.Now()
 	}

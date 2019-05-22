@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+
+	retryablehttp "github.com/hashicorp/go-retryablehttp"
 )
 
 const (
@@ -15,6 +17,14 @@ func getMatchData(matchID int64) oDotaMatchData {
 	log.Println(matchID)
 	getJSON(matchURL, &matchData)
 	return matchData
+}
+
+func forceScan(matchID int64) {
+	matchURL := fmt.Sprintf("%s%s/%d", apiURL, "request", matchID)
+
+	r, _ := retryablehttp.Post(matchURL, "", nil)
+
+	defer r.Body.Close()
 }
 
 func getLeaguesData() oDotaLeaguesData {
