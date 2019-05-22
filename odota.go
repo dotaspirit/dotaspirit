@@ -21,8 +21,7 @@ func getMatchData(matchID int64) oDotaMatchData {
 
 func forceScan(matchID int64) {
 	matchURL := fmt.Sprintf("%s%s/%d", apiURL, "request", matchID)
-	log.Println("Forcescan")
-	log.Println(matchID)
+	log.Printf("Force scan match %d data", matchID)
 	r, _ := retryablehttp.Post(matchURL, "", nil)
 
 	defer r.Body.Close()
