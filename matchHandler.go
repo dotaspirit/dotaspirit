@@ -12,7 +12,7 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 	for currentTime.Sub(startTime) < time.Hour*24 && !hasSend {
 		time.Sleep(5 * time.Minute)
 		retries++
-		log.Printf("Retrying getting full match %d data", matchID)
+		log.Printf("Retrying getting full match %d data (retry %d)", matchID, retries)
 		matchData := getMatchData(matchID)
 		if len(matchData.RadiantGoldAdv) != 0 && len(matchData.PicksBans) != 0 {
 			log.Printf("Found full match %d data", matchID)
