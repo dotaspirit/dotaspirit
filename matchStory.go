@@ -157,11 +157,13 @@ func makeStoryImage(matchData oDotaMatchData) {
 
 	direTeamLogo := imagick.NewMagickWand()
 	direTeamLogo.ReadImage(direTeamFile)
+	direTeamLogo.ResizeImage(294, 294, imagick.FILTER_CUBIC)
 	mw.CompositeImage(direTeamLogo, imagick.COMPOSITE_OP_OVER, true, (1080-294)/2, ((1920/2)-294)/2-100)
 	direTeamLogo.Destroy()
 
 	radiantTeamLogo := imagick.NewMagickWand()
 	radiantTeamLogo.ReadImage(radiantTeamFile)
+	radiantTeamLogo.ResizeImage(294, 294, imagick.FILTER_CUBIC)
 	mw.CompositeImage(radiantTeamLogo, imagick.COMPOSITE_OP_OVER, true, (1080-294)/2, 1920/2+((1920/2)-294)/2-100)
 	radiantTeamLogo.Destroy()
 
