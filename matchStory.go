@@ -116,6 +116,19 @@ func getTeamsLogo(radiantTeamID, direTeamID int) {
 	}
 }
 
+func guessResizeSize(width, height uint) (wOut, hOut uint) {
+	if width > height {
+		mult := 294 / width
+		wOut = height * mult
+		hOut = width * mult
+	} else {
+		mult := 294 / height
+		wOut = height * mult
+		hOut = width * mult
+	}
+	return wOut, hOut
+}
+
 func makeStoryImage(matchData oDotaMatchData) {
 	radiantTeamName := matchData.RadiantName
 	direTeamName := matchData.DireName
@@ -158,13 +171,23 @@ func makeStoryImage(matchData oDotaMatchData) {
 
 	direTeamLogo := imagick.NewMagickWand()
 	direTeamLogo.ReadImage(direTeamFile)
-	direTeamLogo.ResizeImage(294, 294, imagick.FILTER_CUBIC)
+
+	width := direTeamLogo.GetImageWidth()
+	height := direTeamLogo.GetImageHeight()
+	wGuessed, hGuessed := guessResizeSize(width, height)
+
+	direTeamLogo.ResizeImage(wGuessed, hGuessed, imagick.FILTER_CUBIC)
 	mw.CompositeImage(direTeamLogo, imagick.COMPOSITE_OP_OVER, true, (1080-294)/2, ((1920/2)-294)/2-100)
 	direTeamLogo.Destroy()
 
 	radiantTeamLogo := imagick.NewMagickWand()
 	radiantTeamLogo.ReadImage(radiantTeamFile)
-	radiantTeamLogo.ResizeImage(294, 294, imagick.FILTER_CUBIC)
+
+	width = radiantTeamLogo.GetImageWidth()
+	height = radiantTeamLogo.GetImageHeight()
+	wGuessed, hGuessed = guessResizeSize(width, height)
+
+	direTeamLogo.ResizeImage(wGuessed, hGuessed, imagick.FILTER_CUBIC)
 	mw.CompositeImage(radiantTeamLogo, imagick.COMPOSITE_OP_OVER, true, (1080-294)/2, 1920/2+((1920/2)-294)/2-100)
 	radiantTeamLogo.Destroy()
 
