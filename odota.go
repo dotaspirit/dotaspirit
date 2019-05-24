@@ -37,6 +37,13 @@ func getLeaguesData() oDotaLeaguesData {
 	return leaguesData
 }
 
+func getTeamsData() oDotaTeamsData {
+	var teamsData oDotaTeamsData
+	teamsURL := fmt.Sprintf("%s%s", apiURL, "teams")
+	getJSON(teamsURL, &teamsData)
+	return teamsData
+}
+
 func getPlayersData() oDotaPlayersData {
 	var playersData oDotaPlayersData
 	playersURL := fmt.Sprintf("%s%s", apiURL, "proPlayers")

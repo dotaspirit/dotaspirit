@@ -11,6 +11,11 @@ type oDotaPlayersData []struct {
 	Name        string `json:"name"`
 }
 
+type oDotaTeamsData []struct {
+	TeamID  int    `json:"team_id"`
+	LogoURL string `json:"logo_url"`
+}
+
 type oDotaMatchData struct {
 	MatchID  int64 `json:"match_id"`
 	Duration int   `json:"duration"`

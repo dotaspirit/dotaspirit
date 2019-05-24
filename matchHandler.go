@@ -33,6 +33,7 @@ func handleMatch(whData oDotaMatchData) {
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
 	dbMatchData, _ := dao.get(dbMatch{MatchID: matchID})
+	makeStoryImage(whData)
 	if dbMatchData.MatchID != matchID {
 		addMatch(matchID)
 	}
