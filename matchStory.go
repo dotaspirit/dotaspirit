@@ -36,6 +36,9 @@ func getImageColors(file string) (fgColor, bgColor string) {
 			bgColor = swatch.Color.RGBHex()
 		}
 	}
+	if fgColor == bgColor {
+		fgColor = "#000"
+	}
 	return fgColor, bgColor
 }
 
