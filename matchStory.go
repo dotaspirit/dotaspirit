@@ -119,12 +119,12 @@ func getTeamsLogo(radiantTeamID, direTeamID int) {
 func guessResizeSize(width, height uint) (wOut, hOut uint) {
 	if width > height {
 		mult := 294 / width
-		wOut = height * mult
-		hOut = width * mult
+		wOut = width * mult
+		hOut = height * mult
 	} else {
 		mult := 294 / height
-		wOut = height * mult
-		hOut = width * mult
+		wOut = width * mult
+		hOut = height * mult
 	}
 	return wOut, hOut
 }
