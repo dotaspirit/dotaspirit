@@ -22,7 +22,10 @@ func getMatchData(matchID int64) oDotaMatchData {
 func forceScan(matchID int64) {
 	matchURL := fmt.Sprintf("%s%s/%d", apiURL, "request", matchID)
 	log.Printf("Force scan match %d data", matchID)
-	r, _ := retryablehttp.Post(matchURL, "", nil)
+	r, err := retryablehttp.Post(matchURL, "application/json; charset=utf-8", nil)
+	if err != nil {
+		return
+	}
 
 	defer r.Body.Close()
 }
