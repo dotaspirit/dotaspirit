@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"mime/multipart"
@@ -13,6 +14,12 @@ import (
 )
 
 // https://oauth.vk.com/authorize?client_id=APP_ID&redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=photos,stories,wall,offline&v=5.92&revoke=1&response_type=token
+
+type vkUploadResponse struct {
+	Response struct {
+		UploadURL string `json:"upload_url"`
+	} `json:"response"`
+}
 
 func vkGetWallUploadServer(groupID int, accessToken string) getWallUploadServer {
 	unResp := getWallUploadServer{}
@@ -92,7 +99,39 @@ func vkSavePhoto(upResp uploadResponse, groupID int, accessToken string) savedPh
 	return unResp
 }
 
-func sendMatchToVk(matchID int64, text string, isFull bool) (err error) {
+func vkGetPhotoUploadServer(groupID, vkPost int, accessToken string) vkUploadResponse {
+	unResp := vkUploadResponse{}
+	storyLink := fmt.Sprintf("vk.com/wall%d_%d", -appconfig.VkGroupID, vkPost)
+	resp, err := http.Get("https://api.vk.com/method/" + "stories.getPhotoUploadServer?" +
+		url.Values{
+			"access_token": {accessToken},
+			"link_text":    {"go_to"},
+			"link_url":     {storyLink},
+			"v":            {"5.92"},
+			"add_to_news":  {"1"},
+			"group_id":     {strconv.Itoa(groupID)}}.Encode())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	err = json.NewDecoder(resp.Body).Decode(&unResp)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return unResp
+}
+
+func sendStoryToVK(matchID int64, vkPost int) {
+	groupID := appconfig.VkGroupID
+	accessToken := appconfig.VkAPIkey
+	storyFile := fmt.Sprintf("tmp/s%d.png", matchID)
+
+	uploadResponse := vkGetPhotoUploadServer(groupID, vkPost, accessToken)
+	postFile(storyFile, uploadResponse.Response.UploadURL)
+}
+
+func sendMatchToVk(matchID int64, text string, isFull bool) (err error, post int) {
 	unResp := postID{}
 
 	groupID := appconfig.VkGroupID
@@ -124,7 +163,7 @@ func sendMatchToVk(matchID int64, text string, isFull bool) (err error) {
 		markShort(matchID)
 		addPostID(matchID, unResp.Response.PostID)
 	}
-	return nil
+	return nil, unResp.Response.PostID
 }
 
 func editMatchAtVk(matchID int64, post int, text string) (err error) {

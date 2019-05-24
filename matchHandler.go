@@ -33,7 +33,6 @@ func handleMatch(whData oDotaMatchData) {
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
 	dbMatchData, _ := dao.get(dbMatch{MatchID: matchID})
-	makeStoryImage(whData)
 	if dbMatchData.MatchID != matchID {
 		addMatch(matchID)
 	}
@@ -45,7 +44,9 @@ func handleMatch(whData oDotaMatchData) {
 			if dbMatchData.IsShort != true {
 				log.Println("Data from scanner and it's not posted yet")
 				makeMatchImage(matchData, false)
-				sendMatchToVk(matchID, matchText, false)
+				_, vkpost := sendMatchToVk(matchID, matchText, false)
+				makeStoryImage(matchData)
+				sendStoryToVK(matchID, vkpost)
 				startTime := time.Now()
 				go handleGetFullMatchData(matchID, startTime)
 			} else {
@@ -60,7 +61,9 @@ func handleMatch(whData oDotaMatchData) {
 				editMatchAtVk(matchID, dbMatchData.PostID, matchText)
 			} else {
 				log.Println("Data never posted, now posting")
-				sendMatchToVk(matchID, matchText, true)
+				_, vkpost := sendMatchToVk(matchID, matchText, true)
+				makeStoryImage(matchData)
+				sendStoryToVK(matchID, vkpost)
 			}
 		}
 	} else {

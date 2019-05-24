@@ -121,6 +121,7 @@ func makeStoryImage(matchData oDotaMatchData) {
 	direTeamName := matchData.DireName
 	radiantTeamID := matchData.RadiantTeamID
 	direTeamID := matchData.DireTeamID
+	matchID := matchData.MatchID
 
 	getTeamsLogo(radiantTeamID, direTeamID)
 
@@ -172,5 +173,6 @@ func makeStoryImage(matchData oDotaMatchData) {
 	vs.Destroy()
 
 	mw.DrawImage(dw)
-	mw.WriteImage("test.png")
+	storyFile := fmt.Sprintf("tmp/s%d.png", matchID)
+	mw.WriteImage(storyFile)
 }
