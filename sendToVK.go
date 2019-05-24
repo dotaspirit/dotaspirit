@@ -101,7 +101,7 @@ func vkSavePhoto(upResp uploadResponse, groupID int, accessToken string) savedPh
 
 func vkGetPhotoUploadServer(groupID, vkPost int, accessToken string) vkUploadResponse {
 	unResp := vkUploadResponse{}
-	storyLink := fmt.Sprintf("vk.com/wall%d_%d", -appconfig.VkGroupID, vkPost)
+	storyLink := fmt.Sprintf("https://vk.com/wall%d_%d", -appconfig.VkGroupID, vkPost)
 	resp, err := http.Get("https://api.vk.com/method/" + "stories.getPhotoUploadServer?" +
 		url.Values{
 			"access_token": {accessToken},
