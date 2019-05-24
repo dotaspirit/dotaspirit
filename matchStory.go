@@ -187,7 +187,7 @@ func makeStoryImage(matchData oDotaMatchData) {
 	height = radiantTeamLogo.GetImageHeight()
 	wGuessed, hGuessed = guessResizeSize(width, height)
 
-	direTeamLogo.ResizeImage(wGuessed, hGuessed, imagick.FILTER_CUBIC)
+	radiantTeamLogo.ResizeImage(wGuessed, hGuessed, imagick.FILTER_CUBIC)
 	mw.CompositeImage(radiantTeamLogo, imagick.COMPOSITE_OP_OVER, true, (1080-294)/2, 1920/2+((1920/2)-294)/2-100)
 	radiantTeamLogo.Destroy()
 
