@@ -32,7 +32,7 @@ func getImageColors(file string) (fgColor, bgColor string) {
 
 	for name, swatch := range palette.ExtractAwesome() {
 		if name == "Vibrant" {
-			fgColor = swatch.Color.BodyTextColor().RGBHex()
+			fgColor = swatch.Color.TitleTextColor().RGBHex()
 			bgColor = swatch.Color.RGBHex()
 		}
 	}
