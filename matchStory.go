@@ -52,7 +52,7 @@ func createStoryText(fgColor, bgColor, text string) *imagick.MagickWand {
 	pw.SetColor("none")
 	mw.NewImage(1080, 103, pw)
 
-	dw.SetFont("TTCommonsB")
+	dw.SetFont("TT-Commons-Bold")
 	dw.SetFontSize(80)
 
 	textMetrics := mw.QueryFontMetrics(dw, text)
