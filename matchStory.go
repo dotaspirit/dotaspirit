@@ -130,7 +130,7 @@ func guessResizeSize(width, height uint) (wOut, hOut uint) {
 		wOut = width * mult
 		hOut = height * mult
 	}
-	return wOut, hOut
+	return uint(wOut), uint(hOut)
 }
 
 func makeStoryImage(matchData oDotaMatchData) {
