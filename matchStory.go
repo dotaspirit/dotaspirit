@@ -108,7 +108,11 @@ func getTeamsLogo(radiantTeamID, direTeamID int) {
 	for _, team := range teamsData {
 		teamID := team.TeamID
 		if teamID == radiantTeamID || teamID == direTeamID {
-			err := downloadTeamLogo(fmt.Sprintf("tmp/teams/%d.png", teamID), team.LogoURL)
+			logo := team.LogoURL
+			if logo == "" {
+				logo = "https://github.com/dotaspirit/dotaspirit/raw/master/assets/images/nologo.png"
+			}
+			err := downloadTeamLogo(fmt.Sprintf("tmp/teams/%d.png", teamID), logo)
 			if err != nil {
 				log.Printf("Error downloading %d team logo", teamID)
 			}
