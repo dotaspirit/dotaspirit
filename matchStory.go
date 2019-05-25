@@ -130,12 +130,22 @@ func guessResizeSize(width, height uint) (wOut, hOut uint) {
 		wOut = width * mult
 		hOut = height * mult
 	}
+	log.Printf("b4 %d %d, af %d %d", width, height, wOut, hOut)
 	return uint(wOut), uint(hOut)
 }
 
 func makeStoryImage(matchData oDotaMatchData) {
 	radiantTeamName := matchData.RadiantName
 	direTeamName := matchData.DireName
+
+	if radiantTeamName == "" {
+		radiantTeamName = "Radiant"
+	}
+
+	if direTeamName == "" {
+		direTeamName = "Dire"
+	}
+
 	radiantTeamID := matchData.RadiantTeamID
 	direTeamID := matchData.DireTeamID
 	matchID := matchData.MatchID
