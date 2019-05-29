@@ -52,18 +52,18 @@ func makeMatchText(matchData oDotaMatchData) string {
 
 	if matchData.RadiantWin {
 		if seriesID != 0 {
-			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s, %s\n#dota2 #l%d #s%d@rsltdtk %s",
+			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s, %s\n#dota2 #l%d@rsltdtk #s%d@rsltdtk %s",
 				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesText, leagueID, seriesID, vsText)
 		} else {
-			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s\n#dota2 #l%d %s",
+			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s\n#dota2 #l%d@rsltdtk %s",
 				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, leagueID, vsText)
 		}
 	} else {
 		if seriesID != 0 {
-			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s, %s\n#dota2 #l%d #s%d@rsltdtk %s",
+			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s, %s\n#dota2 #l%d@rsltdtk #s%d@rsltdtk %s",
 				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesText, leagueID, seriesID, vsText)
 		} else {
-			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s\n#dota2 #l%d %s",
+			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s\n#dota2 #l%d@rsltdtk %s",
 				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, leagueID, vsText)
 		}
 	}
