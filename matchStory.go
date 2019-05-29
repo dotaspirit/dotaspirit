@@ -149,16 +149,15 @@ func getTeamsLogo(radiantTeamID, direTeamID int) {
 
 func guessResizeSize(width, height uint) (wOut, hOut uint) {
 	if width > height {
-		mult := 294 / width
-		wOut = width * mult
-		hOut = height * mult
+		mult := 294 / float64(width)
+		wOut = uint(float64(width) * mult)
+		hOut = uint(float64(height) * mult)
 	} else {
-		mult := 294 / height
-		wOut = width * mult
-		hOut = height * mult
+		mult := 294 / float64(width)
+		wOut = uint(float64(width) * mult)
+		hOut = uint(float64(height) * mult)
 	}
-	log.Printf("b4 %d %d, af %d %d", width, height, wOut, hOut)
-	return uint(wOut), uint(hOut)
+	return wOut, hOut
 }
 
 func makeStoryImage(matchData oDotaMatchData) {

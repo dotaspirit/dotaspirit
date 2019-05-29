@@ -24,6 +24,7 @@ func makeMatchText(matchData oDotaMatchData) string {
 	direScore := matchData.DireScore
 	hours, minutes, seconds := secondsToTime(matchData.Duration)
 	leagueName := matchData.League.Name
+	leagueID := matchData.Leagueid
 	seriesID := matchData.SeriesID
 	seriesType := matchData.SeriesType
 
@@ -51,19 +52,19 @@ func makeMatchText(matchData oDotaMatchData) string {
 
 	if matchData.RadiantWin {
 		if seriesID != 0 {
-			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s, %s\n#dota2 #s%d@rsltdtk %s",
-				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesText, seriesID, vsText)
+			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s, %s\n#dota2 #l%d #s%d@rsltdtk %s",
+				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesText, leagueID, seriesID, vsText)
 		} else {
-			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s\n#dota2 %s",
-				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, vsText)
+			return fmt.Sprintf("🏆 [rsltdtk|%s] %d - %d %s\n%d:%02d:%02d @ %s\n#dota2 #l%d %s",
+				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, leagueID, vsText)
 		}
 	} else {
 		if seriesID != 0 {
-			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s, %s\n#dota2 #s%d@rsltdtk %s",
-				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesText, seriesID, vsText)
+			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s, %s\n#dota2 #l%d #s%d@rsltdtk %s",
+				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, seriesText, leagueID, seriesID, vsText)
 		} else {
-			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s\n#dota2 %s",
-				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, vsText)
+			return fmt.Sprintf("%s %d - %d 🏆 [rsltdtk|%s]\n%d:%02d:%02d @ %s\n#dota2 #l%d %s",
+				radiantName, radiantScore, direScore, direName, hours, minutes, seconds, leagueName, leagueID, vsText)
 		}
 	}
 }
