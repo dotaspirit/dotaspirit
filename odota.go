@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/url"
 
 	retryablehttp "github.com/hashicorp/go-retryablehttp"
 )
@@ -21,8 +22,10 @@ func getMatchData(matchID int64) oDotaMatchData {
 
 func getSeriesData(matchID int64, seriesID int) oDotaSeriesData {
 	var seriesData oDotaSeriesData
-	apiURL := fmt.Sprintf("https://api.opendota.com/api/explorer?sql=SELECT matches.match_id,matches.radiant_win,matches.radiant_team_id,matches.dire_team_id FROM matches WHERE matches.series_id = %d AND matches.match_id <= %d", seriesID, matchID)
-	getJSON(apiURL, &seriesData)
+	sql := fmt.Sprintf("SELECT matches.match_id,matches.radiant_win,matches.radiant_team_id,matches.dire_team_id FROM matches WHERE matches.series_id = %d AND matches.match_id <= %d", seriesID, matchID)
+	sqlEscaped := url.PathEscape(sql)
+	seriesURL := fmt.Sprintf("%s%s%s", apiURL, "explorer?sql=", sqlEscaped)
+	getJSON(seriesURL, &seriesData)
 	return seriesData
 }
 
