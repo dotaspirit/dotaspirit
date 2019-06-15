@@ -20,7 +20,7 @@ func seriesScoreToText(radiantID, direID, seriesID int, matchID int64) string {
 	radiantScore := 0
 	direScore := 0
 	for _, match := range seriesData.Rows {
-		if match.RadiantWin && match.RadiantTeamID == radiantID {
+		if (match.RadiantWin && match.RadiantTeamID == radiantID) || (!match.RadiantWin && match.DireTeamID == radiantID) {
 			radiantScore++
 		} else {
 			direScore++
