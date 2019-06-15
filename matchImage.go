@@ -59,7 +59,7 @@ func guessFontSize(fontName string, maxFontSize, minFontSize float64, maxHeight,
 	fontSize := maxFontSize
 
 	pw.SetColor("none")
-	mw.NewImage(1020, 1020, pw)
+	mw.NewImage(1, 1, pw)
 
 	for fontSize >= minFontSize {
 		dw.SetFont(fontName)
