@@ -105,7 +105,6 @@ func vkGetPhotoUploadServer(groupID, vkPost int, accessToken string) vkUploadRes
 	resp, err := http.Get("https://api.vk.com/method/" + "stories.getPhotoUploadServer?" +
 		url.Values{
 			"access_token": {accessToken},
-			"link_text":    {"go_to"},
 			"link_url":     {storyLink},
 			"v":            {"5.92"},
 			"add_to_news":  {"1"},
