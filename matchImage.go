@@ -56,9 +56,6 @@ func guessFontSize(fontName string, maxFontSize, minFontSize float64, maxHeight,
 	pw := imagick.NewPixelWand()
 	defer pw.Destroy()
 
-	pw.SetColor("none")
-	mw.NewImage(1020, 1020, pw)
-
 	fontSize := maxFontSize
 
 	for fontSize >= minFontSize {
