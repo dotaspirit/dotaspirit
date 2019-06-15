@@ -63,7 +63,7 @@ func guessFontSize(fontName string, maxFontSize, minFontSize float64, maxHeight,
 
 	for fontSize >= minFontSize {
 		dw.SetFont(fontName)
-		dw.SetFontSize(maxFontSize)
+		dw.SetFontSize(fontSize)
 		textMetrics := mw.QueryFontMetrics(dw, text)
 		if textMetrics.TextHeight > maxHeight || textMetrics.TextWidth > maxWidth {
 			fontSize = fontSize - 1
@@ -413,7 +413,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 			name = getPlayerName(matchData.Players[i].AccountID, playersData)
 		}
 
-		fontSize := guessFontSize("Noto-Sans-CJK-TC-Regular", cConfig.TextSize12, 10, 50, 180, name)
+		fontSize := guessFontSize("Noto-Sans-CJK-TC-Regular", cConfig.TextSize12, 10, 50, 170, name)
 		playerdw.SetFontSize(fontSize)
 		playerdw.Annotation(95, 30, name)
 
