@@ -16,6 +16,14 @@ type oDotaTeamsData []struct {
 	LogoURL string `json:"logo_url"`
 }
 
+type oDotaSeriesData struct {
+	Rows []struct {
+		RadiantWin    bool `json:"radiant_win"`
+		RadiantTeamID int  `json:"radiant_team_id"`
+		DireTeamID    int  `json:"dire_team_id"`
+	} `json:"rows"`
+}
+
 type oDotaMatchData struct {
 	MatchID  int64 `json:"match_id"`
 	Duration int   `json:"duration"`

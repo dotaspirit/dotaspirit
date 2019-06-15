@@ -19,6 +19,13 @@ func getMatchData(matchID int64) oDotaMatchData {
 	return matchData
 }
 
+func getSeriesData(matchID int64, seriesID int) oDotaSeriesData {
+	var seriesData oDotaSeriesData
+	apiURL := fmt.Sprintf("https://api.opendota.com/api/explorer?sql=SELECT matches.match_id,matches.radiant_win,matches.radiant_team_id,matches.dire_team_id FROM matches WHERE matches.series_id = %d AND matches.match_id <= %d", seriesID, matchID)
+	getJSON(apiURL, &seriesData)
+	return seriesData
+}
+
 func forceScan(matchID int64) {
 	matchURL := fmt.Sprintf("%s%s/%d", apiURL, "request", matchID)
 	log.Printf("Force scan match %d data", matchID)
