@@ -51,7 +51,9 @@ func handleMatch(whData oDotaMatchData) {
 				makeStoryImage(matchData)
 				sendStoryToVK(matchID, vkpost)
 				startTime := time.Now()
-				go handleGetFullMatchData(matchID, startTime)
+				if matchData.GameMode == 2 {
+					go handleGetFullMatchData(matchID, startTime)
+				}
 			} else {
 				log.Println("Data from scanner and it was posted")
 			}
