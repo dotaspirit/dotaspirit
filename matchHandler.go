@@ -14,7 +14,10 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 		retries++
 		log.Printf("Retrying getting full match %d data (retry %d)", matchID, retries)
 		matchData := getMatchData(matchID)
-		if len(matchData.RadiantGoldAdv) != 0 && len(matchData.PicksBans) != 0 {
+		isNullMatch := matchData.DireScore == 0 && matchData.RadiantScore == 0
+		if len(matchData.RadiantGoldAdv) != 0 &&
+			len(matchData.PicksBans) != 0 &&
+			!isNullMatch {
 			log.Printf("Found full match %d data", matchID)
 			matchText := makeMatchText(matchData)
 			makeMatchImage(matchData, true)
