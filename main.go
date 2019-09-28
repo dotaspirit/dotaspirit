@@ -25,9 +25,6 @@ func init() {
 }
 
 func main() {
-	go func() {
-		log.Println(http.ListenAndServe(":6060", nil))
-	}()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", webhoookHandler)
 	srv := &http.Server{
