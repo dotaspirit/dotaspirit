@@ -6,8 +6,6 @@ import (
 
 	"github.com/rs/cors"
 	"gopkg.in/gographics/imagick.v3/imagick"
-
-	_ "net/http/pprof"
 )
 
 var (
