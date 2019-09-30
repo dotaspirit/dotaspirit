@@ -153,7 +153,7 @@ func guessResizeSize(width, height uint) (wOut, hOut uint) {
 		wOut = uint(float64(width) * mult)
 		hOut = uint(float64(height) * mult)
 	} else {
-		mult := 294 / float64(width)
+		mult := 294 / float64(height)
 		wOut = uint(float64(width) * mult)
 		hOut = uint(float64(height) * mult)
 	}
