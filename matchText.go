@@ -82,7 +82,7 @@ func makeMatchText(matchData oDotaMatchData) string {
 	seriesText := seriesTypeToText(seriesType)
 	vsText := teamsToVS(radiantID, direID)
 	direText := teamIDtoMention(direID, direName)
-	radiantText := teamIDtoMention(radiantID, direName)
+	radiantText := teamIDtoMention(radiantID, radiantName)
 	seriesScoreText := "[0:0]"
 	if seriesID != 0 {
 		seriesScoreText = seriesScoreToText(radiantID, direID, seriesID, matchID)
