@@ -48,8 +48,10 @@ func handleMatch(whData oDotaMatchData) {
 				log.Println("Data from scanner and it's not posted yet")
 				makeMatchImage(matchData, false)
 				_, vkpost := sendMatchToVk(matchID, matchText, false)
-				makeStoryImage(matchData)
-				sendStoryToVK(matchID, vkpost)
+				if vkpost != 0 {
+					makeStoryImage(matchData)
+					sendStoryToVK(matchID, vkpost)
+				}
 				startTime := time.Now()
 				if matchData.GameMode == 2 {
 					go handleGetFullMatchData(matchID, startTime)
@@ -67,8 +69,10 @@ func handleMatch(whData oDotaMatchData) {
 			} else {
 				log.Println("Data never posted, now posting")
 				_, vkpost := sendMatchToVk(matchID, matchText, true)
-				makeStoryImage(matchData)
-				sendStoryToVK(matchID, vkpost)
+				if vkpost != 0 {
+					makeStoryImage(matchData)
+					sendStoryToVK(matchID, vkpost)
+				}
 			}
 		}
 	} else {
