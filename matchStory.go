@@ -181,6 +181,8 @@ func makeStoryImage(matchData oDotaMatchData) {
 	direTeamFile := fmt.Sprintf("tmp/teams/%d.png", direTeamID)
 	radiantTeamFile := fmt.Sprintf("tmp/teams/%d.png", radiantTeamID)
 
+	storyBgFile := "assets/images/storybg.png"
+
 	mw := imagick.NewMagickWand()
 	defer mw.Destroy()
 	dw := imagick.NewDrawingWand()
@@ -194,7 +196,7 @@ func makeStoryImage(matchData oDotaMatchData) {
 	mw.NewImage(1080, 1920, pw)
 
 	storyBg := imagick.NewMagickWand()
-	storyBg.ReadImage(direTeamFile)
+	storyBg.ReadImage(storyBgFile)
 
 	mw.CompositeImage(storyBg, imagick.COMPOSITE_OP_OVER, true, 0, 0)
 	storyBg.Destroy()
