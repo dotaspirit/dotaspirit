@@ -10,7 +10,8 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 	hasSend := false
 	retries := 0
 	for currentTime.Sub(startTime) < time.Hour*24 && !hasSend {
-		time.Sleep(5 * time.Minute)
+		expBackoff := time.Duration(5 * retries)
+		time.Sleep(expBackoff * time.Minute)
 		retries++
 		log.Printf("Retrying getting full match %d data (retry %d)", matchID, retries)
 		matchData := getMatchData(matchID)

@@ -193,6 +193,12 @@ func makeStoryImage(matchData oDotaMatchData) {
 	pw.SetColor("#242424")
 	mw.NewImage(1080, 1920, pw)
 
+	storyBg := imagick.NewMagickWand()
+	storyBg.ReadImage(direTeamFile)
+
+	mw.CompositeImage(storyBg, imagick.COMPOSITE_OP_OVER, true, 0, 0)
+	storyBg.Destroy()
+
 	fgColor, bgColor := getImageColors(direTeamFile)
 
 	direTeamText := createStoryText(fgColor, bgColor, direTeamName)
