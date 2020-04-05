@@ -34,13 +34,14 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 }
 
 func handleMatch(whData oDotaMatchData) {
+	isNullMatch := whData.DireScore == 0 && whData.RadiantScore == 0
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
 	dbMatchData, _ := dao.get(dbMatch{MatchID: matchID})
 	if dbMatchData.MatchID != matchID {
 		addMatch(matchID)
 	}
-	if dbMatchData.IsFull != true {
+	if dbMatchData.IsFull != true && !isNullMatch {
 		log.Println("Full match data wasn't posted")
 		matchData := whData
 		matchText := makeMatchText(matchData)
