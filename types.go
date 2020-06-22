@@ -35,6 +35,17 @@ type dotaSocialTeamsData []struct {
 	Vk        string `json:"vk,omitempty"`
 }
 
+type dotaSocialLeaguesData []struct {
+	LeagueID  int    `json:"leagueid"`
+	Facebook  string `json:"facebook,omitempty"`
+	Instagram string `json:"instagram,omitempty"`
+	Twitch    string `json:"twitch,omitempty"`
+	Twitter   string `json:"twitter,omitempty"`
+	Youtube   string `json:"youtube,omitempty"`
+	Weibo     string `json:"weibo,omitempty"`
+	Vk        string `json:"vk,omitempty"`
+}
+
 type oDotaMatchData struct {
 	MatchID  int64 `json:"match_id"`
 	Duration int   `json:"duration"`

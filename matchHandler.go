@@ -41,12 +41,12 @@ func handleMatch(whData oDotaMatchData) {
 	if dbMatchData.MatchID != matchID {
 		addMatch(matchID)
 	}
-	if dbMatchData.IsFull != true && !isNullMatch {
+	if !dbMatchData.IsFull && !isNullMatch {
 		log.Println("Full match data wasn't posted")
 		matchData := whData
 		matchText := makeMatchText(matchData)
 		if whData.Origin == "scanner" {
-			if dbMatchData.IsShort != true {
+			if !dbMatchData.IsShort {
 				log.Println("Data from scanner and it's not posted yet")
 				makeMatchImage(matchData, false)
 				_, vkpost := sendMatchToVk(matchID, matchText, false)
@@ -65,7 +65,7 @@ func handleMatch(whData oDotaMatchData) {
 			log.Println("Data from parser")
 			matchData := getMatchData(matchID)
 			makeMatchImage(matchData, true)
-			if dbMatchData.IsShort == true {
+			if dbMatchData.IsShort {
 				log.Println("Data was posted, now editing")
 				editMatchAtVk(matchID, dbMatchData.PostID, matchText)
 			} else {

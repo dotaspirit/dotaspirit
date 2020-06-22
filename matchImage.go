@@ -100,7 +100,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	var playersData oDotaPlayersData
 	var leaguesData oDotaLeaguesData
 
-	if isFull != true {
+	if !isFull {
 		playersData = getPlayersData()
 		leaguesData = getLeaguesData()
 	}
@@ -262,7 +262,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	dw.SetTextAlignment(imagick.ALIGN_LEFT)
 	dw.Annotation(25, 63, fmt.Sprintf("%d:%02d:%02d", hours, minutes, seconds))
-	if isFull == true {
+	if isFull {
 		dw.Annotation(25, 986, matchData.League.Name)
 	} else {
 		dw.Annotation(25, 986, getLeagueName(matchData.Leagueid, leaguesData))
@@ -297,14 +297,14 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	pw.SetColor(cConfig.TextRadiant)
 	dw.SetFillColor(pw)
 	dw.SetTextAlignment(imagick.ALIGN_LEFT)
-	if matchData.RadiantWin == true {
+	if matchData.RadiantWin {
 		dw.Annotation(64, 569, radiantName)
 	} else {
 		dw.Annotation(25, 569, radiantName)
 	}
 	pw.SetColor(cConfig.TextDire)
 	dw.SetFillColor(pw)
-	if matchData.RadiantWin == false {
+	if !matchData.RadiantWin {
 		dw.Annotation(64, 469, direName)
 	} else {
 		dw.Annotation(25, 469, direName)
@@ -317,7 +317,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	winnerImage := imagick.NewMagickWand()
 	defer winnerImage.Destroy()
 	winnerImage.ReadImage("assets/images/winner.png")
-	if matchData.RadiantWin == true {
+	if matchData.RadiantWin {
 		mw.CompositeImage(winnerImage, imagick.COMPOSITE_OP_OVER, true, 25, 541)
 	} else {
 		mw.CompositeImage(winnerImage, imagick.COMPOSITE_OP_OVER, true, 25, 441)
@@ -403,7 +403,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 		playerdw.SetFont("Noto-Sans-CJK-TC-Regular")
 		var name string
-		if isFull == true {
+		if isFull {
 			if matchData.Players[i].Name == "" {
 				name = matchData.Players[i].Personaname
 			} else {
@@ -526,7 +526,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 			direPicksdw.SetFillColor(direPickspw)
 			direPicksdw.SetFontSize(cConfig.TextSize8)
 			direPicksdw.SetTextAlignment(imagick.ALIGN_CENTER)
-			if matchData.PicksBans[i].IsPick == true {
+			if matchData.PicksBans[i].IsPick {
 				text = "PICK " + strconv.Itoa(matchData.PicksBans[i].Order+1)
 			} else {
 				text = "BAN " + strconv.Itoa(matchData.PicksBans[i].Order+1)
@@ -545,7 +545,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 			radiantPicksdw.SetFillColor(radiantPickspw)
 			radiantPicksdw.SetFontSize(cConfig.TextSize8)
 			radiantPicksdw.SetTextAlignment(imagick.ALIGN_CENTER)
-			if matchData.PicksBans[i].IsPick == true {
+			if matchData.PicksBans[i].IsPick {
 				text = "PICK " + strconv.Itoa(matchData.PicksBans[i].Order+1)
 			} else {
 				text = "BAN " + strconv.Itoa(matchData.PicksBans[i].Order+1)

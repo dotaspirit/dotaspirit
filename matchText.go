@@ -46,6 +46,21 @@ func teamIDtoMention(teamID int, teamName string) string {
 	return teamName
 }
 
+func leagueIDtoMention(leagueID int, leagueName string) string {
+	var leaguesData dotaSocialLeaguesData
+	leaguesURL := "https://raw.githubusercontent.com/dotaspirit/dotasocial/master/leagues.json"
+	getJSON(leaguesURL, &leaguesData)
+	for _, league := range leaguesData {
+		if league.LeagueID == leagueID {
+			vk := league.Vk
+			if vk != "" {
+				return fmt.Sprintf("[%s|%s]", vk, leagueName)
+			}
+		}
+	}
+	return leagueName
+}
+
 func makeMatchText(matchData oDotaMatchData) string {
 	radiantName := matchData.RadiantTeam.Name
 	direName := matchData.DireTeam.Name
@@ -83,6 +98,7 @@ func makeMatchText(matchData oDotaMatchData) string {
 	vsText := teamsToVS(radiantID, direID)
 	direText := teamIDtoMention(direID, direName)
 	radiantText := teamIDtoMention(radiantID, radiantName)
+	leagueText := leagueIDtoMention(leagueID, leagueName)
 	seriesScoreText := "[0:0]"
 	if seriesID != 0 {
 		seriesScoreText = seriesScoreToText(radiantID, direID, seriesID, matchID)
@@ -91,18 +107,18 @@ func makeMatchText(matchData oDotaMatchData) string {
 	if matchData.RadiantWin {
 		if seriesID != 0 {
 			return fmt.Sprintf("🏆 %s %d - %d %s\n%d:%02d:%02d @ %s, %s %s\n#dota2 #l%d@rsltdtk #s%d@rsltdtk %s",
-				radiantText, radiantScore, direScore, direText, hours, minutes, seconds, leagueName, seriesScoreText, seriesText, leagueID, seriesID, vsText)
+				radiantText, radiantScore, direScore, direText, hours, minutes, seconds, leagueText, seriesScoreText, seriesText, leagueID, seriesID, vsText)
 		} else {
 			return fmt.Sprintf("🏆 %s %d - %d %s\n%d:%02d:%02d @ %s\n#dota2 #l%d@rsltdtk %s",
-				radiantText, radiantScore, direScore, direText, hours, minutes, seconds, leagueName, leagueID, vsText)
+				radiantText, radiantScore, direScore, direText, hours, minutes, seconds, leagueText, leagueID, vsText)
 		}
 	} else {
 		if seriesID != 0 {
 			return fmt.Sprintf("%s %d - %d 🏆 %s\n%d:%02d:%02d @ %s, %s %s\n#dota2 #l%d@rsltdtk #s%d@rsltdtk %s",
-				radiantText, radiantScore, direScore, direText, hours, minutes, seconds, leagueName, seriesScoreText, seriesText, leagueID, seriesID, vsText)
+				radiantText, radiantScore, direScore, direText, hours, minutes, seconds, leagueText, seriesScoreText, seriesText, leagueID, seriesID, vsText)
 		} else {
 			return fmt.Sprintf("%s %d - %d 🏆 %s\n%d:%02d:%02d @ %s\n#dota2 #l%d@rsltdtk %s",
-				radiantText, radiantScore, direScore, direText, hours, minutes, seconds, leagueName, leagueID, vsText)
+				radiantText, radiantScore, direScore, direText, hours, minutes, seconds, leagueText, leagueID, vsText)
 		}
 	}
 }
