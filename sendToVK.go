@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"time"
 )
 
 // https://oauth.vk.com/authorize?client_id=APP_ID&redirect_uri=https://oauth.vk.com/blank.html&display=page&scope=photos,stories,wall,offline&v=5.92&revoke=1&response_type=token
@@ -165,14 +166,26 @@ func sendMatchToVk(matchID int64, text string, isFull bool) (err error, post int
 	return nil, unResp.Response.PostID
 }
 
-func editMatchAtVk(matchID int64, post int, text string) (err error) {
-
+func uploadPhoto(matchID int64) savedPhoto {
 	groupID := appconfig.VkGroupID
 	accessToken := appconfig.VkAPIkey
 
 	upServer := vkGetWallUploadServer(groupID, accessToken)
 	upLink := postFile("tmp/"+strconv.FormatInt(matchID, 10)+".png", upServer.Response.UploadURL)
 	upPhoto := vkSavePhoto(upLink, groupID, accessToken)
+	return upPhoto
+}
+
+func editMatchAtVk(matchID int64, post int, text string) (err error) {
+
+	groupID := appconfig.VkGroupID
+	accessToken := appconfig.VkAPIkey
+
+	upPhoto := uploadPhoto(matchID)
+	for i := 0; len(upPhoto.Response) == 0; i++ {
+		upPhoto = uploadPhoto(matchID)
+		time.Sleep(time.Duration(i) * time.Second)
+	}
 
 	resp, err := http.Get("https://api.vk.com/method/" + "wall.edit?" +
 		url.Values{"owner_id": {strconv.Itoa(-groupID)},
