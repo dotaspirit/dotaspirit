@@ -559,8 +559,8 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	// radiantPicksmw.WriteImage("./tmp/radiant_picks.png")
 	// direPicksmw.WriteImage("./tmp/dire_picks.png")
 
-	mw.CompositeImage(direPicksmw, imagick.COMPOSITE_OP_OVER, true, 28, 366)
-	mw.CompositeImage(radiantPicksmw, imagick.COMPOSITE_OP_OVER, true, 28, 610)
+	mw.CompositeImage(direPicksmw, imagick.COMPOSITE_OP_OVER, true, 25, 366)
+	mw.CompositeImage(radiantPicksmw, imagick.COMPOSITE_OP_OVER, true, 25, 610)
 
 	// PICKS
 
