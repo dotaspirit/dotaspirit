@@ -520,7 +520,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 			heroImage.Destroy()
 			direPickspw.SetColor("#000000AA")
 			direPicksdw.SetFillColor(direPickspw)
-			direPicksdw.Rectangle(float64(dir*81), float64(34), float64(dir*81+79), float64(44))
+			direPicksdw.Rectangle(float64(dir*81), float64(31), float64(dir*81+79), float64(44))
 
 			direPickspw.SetColor(cConfig.Text)
 			direPicksdw.SetFillColor(direPickspw)
@@ -539,7 +539,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 			heroImage.Destroy()
 			radiantPickspw.SetColor("#000000AA")
 			radiantPicksdw.SetFillColor(radiantPickspw)
-			radiantPicksdw.Rectangle(float64(rad*81), float64(34), float64(rad*81+79), float64(81))
+			radiantPicksdw.Rectangle(float64(rad*81), float64(31), float64(rad*81+79), float64(81))
 
 			radiantPickspw.SetColor(cConfig.Text)
 			radiantPicksdw.SetFillColor(radiantPickspw)
