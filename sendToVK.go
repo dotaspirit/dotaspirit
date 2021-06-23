@@ -27,7 +27,7 @@ func vkGetWallUploadServer(groupID int, accessToken string) getWallUploadServer 
 	resp, err := http.Get("https://api.vk.com/method/" + "photos.getWallUploadServer?" +
 		url.Values{
 			"access_token": {accessToken},
-			"v":            {"5.92"},
+			"v":            {"5.109"},
 			"group_id":     {strconv.Itoa(groupID)}}.Encode())
 	if err != nil {
 		log.Fatal(err)
@@ -85,7 +85,7 @@ func vkSavePhoto(upResp uploadResponse, groupID int, accessToken string) savedPh
 		url.Values{
 			"group_id":     {strconv.Itoa(groupID)},
 			"access_token": {accessToken},
-			"v":            {"5.92"},
+			"v":            {"5.109"},
 			"server":       {strconv.Itoa(upResp.Server)},
 			"hash":         {upResp.Hash},
 			"photo":        {upResp.Photo}}.Encode())
@@ -107,7 +107,7 @@ func vkGetPhotoUploadServer(groupID, vkPost int, accessToken string) vkUploadRes
 		url.Values{
 			"access_token": {accessToken},
 			"link_url":     {storyLink},
-			"v":            {"5.92"},
+			"v":            {"5.109"},
 			"add_to_news":  {"1"},
 			"group_id":     {strconv.Itoa(groupID)}}.Encode())
 	if err != nil {
@@ -144,8 +144,9 @@ func sendMatchToVk(matchID int64, text string, isFull bool) (err error, post int
 	resp, err := http.Get("https://api.vk.com/method/" + "wall.post?" +
 		url.Values{"owner_id": {strconv.Itoa(-groupID)},
 			"access_token": {accessToken},
-			"v":            {"5.92"},
+			"v":            {"5.109"},
 			"message":      {text},
+			"topic_id":     {"12"},
 			"attachments":  {"photo" + strconv.Itoa(upPhoto.Response[0].OwnerID) + "_" + strconv.Itoa(upPhoto.Response[0].ID) + ",https://www.opendota.com/matches/" + strconv.FormatInt(matchID, 10) + "/"},
 			"from_group":   {"1"}}.Encode())
 	if err != nil {
@@ -190,9 +191,10 @@ func editMatchAtVk(matchID int64, post int, text string) (err error) {
 	resp, err := http.Get("https://api.vk.com/method/" + "wall.edit?" +
 		url.Values{"owner_id": {strconv.Itoa(-groupID)},
 			"access_token": {accessToken},
-			"v":            {"5.92"},
+			"v":            {"5.109"},
 			"message":      {text},
 			"post_id":      {strconv.Itoa(post)},
+			"topic_id":     {"12"},
 			"attachments":  {"photo" + strconv.Itoa(upPhoto.Response[0].OwnerID) + "_" + strconv.Itoa(upPhoto.Response[0].ID) + ",https://www.opendota.com/matches/" + strconv.FormatInt(matchID, 10) + "/"},
 			"from_group":   {"1"}}.Encode())
 	if err != nil {
