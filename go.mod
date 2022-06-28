@@ -1,6 +1,6 @@
 module github.com/dotaspirit/dotaspirit
 
-go 1.12
+go 1.18
 
 require (
 	github.com/generaltso/sadbox v0.0.0-20120828195626-27893f92b8ce // indirect
