@@ -6,7 +6,7 @@ require (
 	github.com/generaltso/vibrant v0.0.0-20171030211322-563623b97aee
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/hashicorp/go-retryablehttp v0.7.2
-	github.com/rs/cors v1.8.2
+	github.com/rs/cors v1.8.3
 	gopkg.in/gographics/imagick.v3 v3.4.1
 )
 
