@@ -264,7 +264,9 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		ctx.DrawImage(13+stepDist, startPosY-50+74, heroImg, canvas.DPMM(2.69473684211))
 		ctx.SetFillColor(colorOverlay)
 		ctx.DrawPath(13+stepDist, startPosY-50+112, canvas.Rectangle(95, 16))
-		ctx.DrawText(18+stepDist, startPosY-50+124, canvas.NewTextLine(face, getPlayerRole(player.LaneRole), canvas.Left))
+		if isFull {
+			ctx.DrawText(18+stepDist, startPosY-50+124, canvas.NewTextLine(face, getPlayerRole(player.LaneRole), canvas.Left))
+		}
 		// Player color
 		ctx.SetStrokeColor(canvas.Transparent)
 		ctx.SetFillColor(parseHexColor(cConfig.PlayerColor[i]))
