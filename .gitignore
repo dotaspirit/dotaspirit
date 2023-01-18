@@ -1,3 +1,4 @@
-tmp/
+tmp
 config/app.json
 .DS_Store
+assets/fonts

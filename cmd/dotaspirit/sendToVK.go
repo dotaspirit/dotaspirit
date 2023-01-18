@@ -157,13 +157,6 @@ func sendMatchToVk(matchID int64, text string, isFull bool) (err error, post int
 	if err != nil {
 		log.Fatal(err)
 	}
-	if isFull {
-		markFull(matchID)
-		addPostID(matchID, unResp.Response.PostID)
-	} else {
-		markShort(matchID)
-		addPostID(matchID, unResp.Response.PostID)
-	}
 	return nil, unResp.Response.PostID
 }
 
@@ -201,6 +194,6 @@ func editMatchAtVk(matchID int64, post int, text string) (err error) {
 		log.Fatal(err)
 	}
 	defer resp.Body.Close()
-	markFull(matchID)
+	markDone(matchID)
 	return nil
 }

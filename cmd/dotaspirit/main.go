@@ -4,25 +4,27 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/dgraph-io/badger"
 	"github.com/rs/cors"
-	"gopkg.in/gographics/imagick.v3/imagick"
 )
 
 var (
-	appconfig = appConfig{}
-	dao       = dbDao{}
+	appconfig appConfig
+	cConfig   colorConfig
+	db        *badger.DB
 )
 
 func init() {
 	loadConfig("config/app.json", &appconfig)
-	dao.Server = appconfig.DBServer
-	dao.Database = appconfig.DBName
-	dao.connect()
-	imagick.Initialize()
-	defer imagick.Terminate()
+	db, _ = badger.Open(badger.DefaultOptions("./tmp/badger"))
+	err := loadConfig("./config/colors.json", &cConfig)
+	if err != nil {
+		log.Println(err.Error())
+	}
 }
 
 func main() {
+	defer db.Close()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", webhoookHandler)
 	srv := &http.Server{
