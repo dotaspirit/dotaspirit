@@ -46,7 +46,7 @@ func handleMatch(whData oDotaMatchData) {
 
 	if getData(matchID) == "" && !isNullMatch {
 		log.Println("Match wasn't posted yet")
-		matchData := whData
+		matchData := getMatchData(matchID)
 		matchText := makeMatchText(matchData)
 		makeMatchImage(matchData, false)
 		_, postID := sendMatchToVk(matchID, matchText, false)
