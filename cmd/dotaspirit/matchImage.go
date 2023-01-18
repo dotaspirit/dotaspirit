@@ -91,7 +91,7 @@ func parseHexColor(s string) (c color.RGBA) {
 	return
 }
 
-func makeMatchImage(matchData oDotaMatchData) {
+func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	fontHypatiaSansPro := canvas.NewFontFamily("dejavu")
 	if err := fontHypatiaSansPro.LoadFontFile("./assets/fonts/HypatiaSansPro-Regular.otf", canvas.FontRegular); err != nil {
@@ -151,69 +151,71 @@ func makeMatchImage(matchData oDotaMatchData) {
 
 	// Graph
 
-	graphScaleX := 483 / float64(matchDuration/60)
+	if isFull {
+		graphScaleX := 483 / float64(matchDuration/60)
 
-	xpAdv := matchData.RadiantXpAdv
-	maxXpAdv := xpAdv[0]
-	for i := 0; i <= matchDuration/60; i++ {
-		posAdv := math.Abs(float64(xpAdv[i]))
-		if posAdv > float64(maxXpAdv) {
-			maxXpAdv = int(posAdv)
+		xpAdv := matchData.RadiantXpAdv
+		maxXpAdv := xpAdv[0]
+		for i := 0; i <= matchDuration/60; i++ {
+			posAdv := math.Abs(float64(xpAdv[i]))
+			if posAdv > float64(maxXpAdv) {
+				maxXpAdv = int(posAdv)
+			}
 		}
-	}
 
-	goldAdv := matchData.RadiantGoldAdv
-	maxGoldAdv := goldAdv[0]
-	for i := 0; i <= matchDuration/60; i++ {
-		posAdv := math.Abs(float64(goldAdv[i]))
-		if posAdv > float64(maxGoldAdv) {
-			maxGoldAdv = int(posAdv)
+		goldAdv := matchData.RadiantGoldAdv
+		maxGoldAdv := goldAdv[0]
+		for i := 0; i <= matchDuration/60; i++ {
+			posAdv := math.Abs(float64(goldAdv[i]))
+			if posAdv > float64(maxGoldAdv) {
+				maxGoldAdv = int(posAdv)
+			}
 		}
+
+		maxAdv := 0
+
+		if maxXpAdv > maxGoldAdv {
+			maxAdv = maxXpAdv
+		} else {
+			maxAdv = maxGoldAdv
+		}
+
+		graphScaleY := (80 / 2) / math.Abs(float64(maxAdv))
+
+		// Line
+		p := &canvas.Path{}
+		p.LineTo(483, 0)
+
+		ctx.SetStrokeColor(colorGraphLine)
+		ctx.SetFillColor(canvas.Transparent)
+		ctx.DrawPath(13, 255, p)
+
+		// XP
+
+		p = &canvas.Path{}
+		p.LineTo(0, 0)
+		for i, adv := range xpAdv {
+			sx := float64(i) * graphScaleX
+			sy := float64(-adv) * graphScaleY
+			p.LineTo(sx, sy)
+		}
+
+		ctx.SetStrokeColor(colorGraphXP)
+		ctx.DrawPath(13, 255, p)
+
+		// Gold
+
+		p = &canvas.Path{}
+		p.LineTo(0, 0)
+		for i, adv := range goldAdv {
+			sx := float64(i) * graphScaleX
+			sy := float64(-adv) * graphScaleY
+			p.LineTo(sx, sy)
+		}
+
+		ctx.SetStrokeColor(colorGraphGold)
+		ctx.DrawPath(13, 255, p)
 	}
-
-	maxAdv := 0
-
-	if maxXpAdv > maxGoldAdv {
-		maxAdv = maxXpAdv
-	} else {
-		maxAdv = maxGoldAdv
-	}
-
-	graphScaleY := (80 / 2) / math.Abs(float64(maxAdv))
-
-	// Line
-	p := &canvas.Path{}
-	p.LineTo(483, 0)
-
-	ctx.SetStrokeColor(colorGraphLine)
-	ctx.SetFillColor(canvas.Transparent)
-	ctx.DrawPath(13, 255, p)
-
-	// XP
-
-	p = &canvas.Path{}
-	p.LineTo(0, 0)
-	for i, adv := range xpAdv {
-		sx := float64(i) * graphScaleX
-		sy := float64(-adv) * graphScaleY
-		p.LineTo(sx, sy)
-	}
-
-	ctx.SetStrokeColor(colorGraphXP)
-	ctx.DrawPath(13, 255, p)
-
-	// Gold
-
-	p = &canvas.Path{}
-	p.LineTo(0, 0)
-	for i, adv := range goldAdv {
-		sx := float64(i) * graphScaleX
-		sy := float64(-adv) * graphScaleY
-		p.LineTo(sx, sy)
-	}
-
-	ctx.SetStrokeColor(colorGraphGold)
-	ctx.DrawPath(13, 255, p)
 
 	// Score text
 	face = fontHypatiaSansPro.Face(100, colorText, canvas.FontRegular, canvas.FontNormal)

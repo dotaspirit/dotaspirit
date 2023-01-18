@@ -23,7 +23,7 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 			!isNullMatch {
 			log.Printf("Found full match %d data", matchID)
 			matchText := makeMatchText(matchData)
-			makeMatchImage(matchData)
+			makeMatchImage(matchData, true)
 			sPostID := getData(matchID)
 			postID, _ := strconv.Atoi(sPostID)
 			editMatchAtVk(matchID, postID, matchText)
@@ -48,7 +48,7 @@ func handleMatch(whData oDotaMatchData) {
 		log.Println("Match wasn't posted yet")
 		matchData := whData
 		matchText := makeMatchText(matchData)
-		makeMatchImage(matchData)
+		makeMatchImage(matchData, false)
 		_, postID := sendMatchToVk(matchID, matchText, false)
 		markSent(matchID, postID)
 		startTime := time.Now()
