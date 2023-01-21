@@ -289,7 +289,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 			ctx.DrawText(78+stepDist, startPosY-50+151, canvas.NewTextLine(face, prettifyBigValues(player.HeroHealing), canvas.Left))
 		} else {
 			face = fontHypatiaSansPro.Face(31.4285714286, colorGold, canvas.FontRegular, canvas.FontNormal)
-			ctx.DrawText(56+stepDist, startPosY-50+151, canvas.NewTextLine(face, prettifyBigValues(player.TotalGold), canvas.Right))
+			ctx.DrawText(56+stepDist, startPosY-50+151, canvas.NewTextLine(face, prettifyBigValues(player.NetWorth), canvas.Right))
 
 			face = fontHypatiaSansPro.Face(31.4285714286, colorDamage, canvas.FontRegular, canvas.FontNormal)
 			ctx.DrawText(64+stepDist, startPosY-50+151, canvas.NewTextLine(face, prettifyBigValues(player.HeroDamage), canvas.Left))
