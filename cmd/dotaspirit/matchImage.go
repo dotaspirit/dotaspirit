@@ -280,7 +280,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		// Gold Damage Healing
 		if player.HeroHealing > 0 {
 			face = fontHypatiaSansPro.Face(31.4285714286, colorGold, canvas.FontRegular, canvas.FontNormal)
-			ctx.DrawText(42+stepDist, startPosY-50+151, canvas.NewTextLine(face, prettifyBigValues(player.TotalGold), canvas.Right))
+			ctx.DrawText(42+stepDist, startPosY-50+151, canvas.NewTextLine(face, prettifyBigValues(player.NetWorth), canvas.Right))
 
 			face = fontHypatiaSansPro.Face(31.4285714286, colorDamage, canvas.FontRegular, canvas.FontNormal)
 			ctx.DrawText(61+stepDist, startPosY-50+151, canvas.NewTextLine(face, prettifyBigValues(player.HeroDamage), canvas.Center))
