@@ -57,7 +57,7 @@ func loadConfig(path string, target interface{}) error {
 	return nil
 }
 
-func stripPoweredBy(leagueName string) string {
+func stripPresentedBy(leagueName string) string {
 	m := regexp.MustCompile(" – presented by.+$")
 	poweredByRemoved := m.ReplaceAllString(string(leagueName), "")
 	fmt.Println(poweredByRemoved)
