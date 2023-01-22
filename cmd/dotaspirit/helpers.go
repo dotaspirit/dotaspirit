@@ -32,18 +32,6 @@ func getPlayerRole(role int) string {
 	return roleNames[role]
 }
 
-func getPlayerName(accountID int, playersData oDotaPlayersData) string {
-	for _, player := range playersData {
-		if player.AccountID == accountID {
-			if player.Name != "" {
-				return player.Name
-			}
-			return player.Personaname
-		}
-	}
-	return "Player"
-}
-
 func getLeagueName(leagueID int, leaguesData oDotaLeaguesData) string {
 	for _, league := range leaguesData {
 		if league.Leagueid == leagueID {

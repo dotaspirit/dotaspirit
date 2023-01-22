@@ -51,7 +51,7 @@ func handleMatch(whData oDotaMatchData) {
 		matchData := getMatchData(matchID)
 		matchText := makeMatchText(matchData)
 		makeMatchImage(matchData, false)
-		_, postID := sendMatchToVk(matchID, matchText, false)
+		postID, _ := sendMatchToVk(matchID, matchText, false)
 		markSent(matchID, postID)
 		startTime := time.Now()
 		if matchData.GameMode == 2 {
