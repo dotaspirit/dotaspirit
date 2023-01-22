@@ -156,6 +156,8 @@ func editMatchAtVk(matchID int64, post int, text string) (err error) {
 		log.Fatal(err)
 	}
 	defer resp.Body.Close()
-	markDone(matchID)
+	if !appconfig.IsDebug {
+		markDone(matchID)
+	}
 	return nil
 }
