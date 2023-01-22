@@ -62,10 +62,12 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		panic(err)
 	}
 
+	leagueName := stripPoweredBy(matchData.League.Name)
+
 	// Corner texts
 	ctx.DrawText(13, 30, canvas.NewTextLine(face, fmt.Sprintf("%d:%02d:%02d", hours, minutes, seconds), canvas.Left))
 	ctx.DrawText(497, 30, canvas.NewTextLine(face, sMatchID, canvas.Right))
-	ctx.DrawText(13, 491, canvas.NewTextLine(face, matchData.League.Name, canvas.Left))
+	ctx.DrawText(13, 491, canvas.NewTextLine(face, leagueName, canvas.Left))
 	ctx.DrawImage(360, 460, gradImg, canvas.DPMM(6))
 	ctx.DrawText(497, 491, canvas.NewTextLine(face, "#rsltdtk", canvas.Right))
 

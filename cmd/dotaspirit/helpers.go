@@ -7,6 +7,7 @@ import (
 	"image/color"
 	"io"
 	"os"
+	"regexp"
 	"strconv"
 )
 
@@ -54,6 +55,13 @@ func loadConfig(path string, target interface{}) error {
 	}
 
 	return nil
+}
+
+func stripPoweredBy(leagueName string) string {
+	m := regexp.MustCompile(" – presented by.+$")
+	poweredByRemoved := m.ReplaceAllString(string(leagueName), "")
+	fmt.Println(poweredByRemoved)
+	return poweredByRemoved
 }
 
 func parseHexColor(s string) (c color.RGBA) {
