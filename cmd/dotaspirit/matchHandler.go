@@ -56,6 +56,12 @@ func handleMatch(whData oDotaMatchData) {
 		if matchData.GameMode == 2 {
 			go handleGetFullMatchData(matchID, startTime)
 		}
+	} else if appconfig.IsDebug {
+		log.Println("Debug enabled not posting")
+	} else if getData(matchID) != "done" && getData(matchID) != "" {
+		log.Println("Match posted trying to edit")
+		startTime := time.Now()
+		go handleGetFullMatchData(matchID, startTime)
 	} else {
 		log.Println("Data was posted nothing to do here")
 	}
