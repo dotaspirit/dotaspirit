@@ -162,7 +162,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 				ctx.DrawPath(250+6*float64(i), 297, canvas.Rectangle(3, 5))
 			} else {
 				ctx.SetFillColor(canvas.Transparent)
-				ctx.DrawPath(250+6*float64(i), 208, canvas.Rectangle(3, 5))
+				ctx.DrawPath(250+6*float64(i), 297, canvas.Rectangle(3, 5))
 			}
 		}
 	case 2:
