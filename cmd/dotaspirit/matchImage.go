@@ -229,7 +229,17 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 		ctx.SetFillColor(colorOverlay)
 		ctx.DrawPath(13+stepDist, startPosY-50+112, canvas.Rectangle(95, 16))
 		if isFull {
-			ctx.DrawText(18+stepDist, startPosY-50+124, canvas.NewTextLine(face, getPlayerRole(player.LaneRole), canvas.Left))
+			playerInfo := ""
+			if player.IsRoaming {
+				playerInfo += "Rm "
+			}
+			playerInfo += getPlayerLane(player.LaneRole)
+			if player.LhT[10] < 20 && player.ObsPlaced >= 2 {
+				playerInfo += " Supp"
+			} else {
+				playerInfo += " Core"
+			}
+			ctx.DrawText(18+stepDist, startPosY-50+124, canvas.NewTextLine(face, playerInfo, canvas.Left))
 		}
 		// Player color
 		ctx.SetStrokeColor(canvas.Transparent)

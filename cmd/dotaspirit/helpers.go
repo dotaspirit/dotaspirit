@@ -27,9 +27,9 @@ func prettifyBigValues(value int) string {
 	}
 }
 
-func getPlayerRole(role int) string {
-	roleNames := [5]string{"Unknown", "Safe", "Mid", "Offlane", "Jungle"}
-	return roleNames[role]
+func getPlayerLane(role int) string {
+	laneNames := [5]string{"Unknown", "Safe", "Mid", "Off", "Jun"}
+	return laneNames[role]
 }
 
 func getLeagueName(leagueID int, leaguesData oDotaLeaguesData) string {

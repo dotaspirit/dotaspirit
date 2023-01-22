@@ -89,6 +89,9 @@ type oDotaMatchData struct {
 		Kills       int    `json:"kills"`
 		Deaths      int    `json:"deaths"`
 		Assists     int    `json:"assists"`
+		IsRoaming   bool   `json:"is_roaming"`
+		ObsPlaced   int    `json:"obs_placed"`
+		LhT         []int  `json:"lh_t"`
 	}
 }
 
