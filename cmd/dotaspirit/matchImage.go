@@ -1,12 +1,8 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"image/color"
 	"image/png"
-	"io"
 	"math"
 	"os"
 	"strconv"
@@ -14,82 +10,6 @@ import (
 	"github.com/tdewolff/canvas"
 	"github.com/tdewolff/canvas/renderers"
 )
-
-func prettifyBigValues(value int) string {
-	if value < 1000 {
-		return strconv.Itoa(value)
-	} else {
-		result := fmt.Sprintf("%.1fk", float64(value)/1000)
-		return result
-	}
-}
-
-func getPlayerRole(role int) string {
-	roleNames := [5]string{"Unknown", "Safe", "Mid", "Offlane", "Jungle"}
-	return roleNames[role]
-}
-
-func getPlayerName(accountID int, playersData oDotaPlayersData) string {
-	for _, player := range playersData {
-		if player.AccountID == accountID {
-			if player.Name != "" {
-				return player.Name
-			}
-			return player.Personaname
-		}
-	}
-	return "Player"
-}
-
-func getLeagueName(leagueID int, leaguesData oDotaLeaguesData) string {
-	for _, league := range leaguesData {
-		if league.Leagueid == leagueID {
-			return league.Name
-		}
-	}
-	return "League"
-}
-
-func loadConfig(path string, target interface{}) error {
-	buf := bytes.NewBuffer(nil)
-	f, _ := os.Open(path)
-	io.Copy(buf, f)
-	f.Close()
-
-	err := json.Unmarshal(buf.Bytes(), &target)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func parseHexColor(s string) (c color.RGBA) {
-	switch len(s) {
-	case 9:
-		_, _ = fmt.Sscanf(s, "#%02x%02x%02x%02x", &c.R, &c.G, &c.B, &c.A)
-	case 7:
-		c.A = 0xff
-		_, _ = fmt.Sscanf(s, "#%02x%02x%02x", &c.R, &c.G, &c.B)
-	case 5:
-		c.A = 0xff
-		_, _ = fmt.Sscanf(s, "#%1x%1x%1x%1x", &c.R, &c.G, &c.B, &c.A)
-		// Double the hex digits:
-		c.R *= 17
-		c.G *= 17
-		c.B *= 17
-		c.A *= 17
-	case 4:
-		c.A = 0xff
-		_, _ = fmt.Sscanf(s, "#%1x%1x%1x", &c.R, &c.G, &c.B)
-		// Double the hex digits:
-		c.R *= 17
-		c.G *= 17
-		c.B *= 17
-	}
-	return
-}
 
 func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
@@ -221,6 +141,50 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 	face = fontHypatiaSansPro.Face(100, colorText, canvas.FontRegular, canvas.FontNormal)
 	ctx.DrawText(255, 242, canvas.NewTextLine(face, strconv.Itoa(matchData.RadiantScore), canvas.Center))
 	ctx.DrawText(255, 292, canvas.NewTextLine(face, strconv.Itoa(matchData.DireScore), canvas.Center))
+
+	radiantSeriesScore, direSeriesScore := getSeriesScore(matchData.RadiantTeamID, matchData.DireTeamID, matchData.SeriesID, matchData.MatchID)
+
+	ctx.SetStrokeColor(colorGold)
+	switch matchData.SeriesType {
+	case 1:
+		for i := 0; i < 2; i++ {
+			if i < radiantSeriesScore {
+				ctx.SetFillColor(colorGold)
+				ctx.DrawPath(250+6*float64(i), 208, canvas.Rectangle(3, 5))
+			} else {
+				ctx.SetFillColor(canvas.Transparent)
+				ctx.DrawPath(250+6*float64(i), 208, canvas.Rectangle(3, 5))
+			}
+		}
+		for i := 0; i < 2; i++ {
+			if i < direSeriesScore {
+				ctx.SetFillColor(colorGold)
+				ctx.DrawPath(250+6*float64(i), 297, canvas.Rectangle(3, 5))
+			} else {
+				ctx.SetFillColor(canvas.Transparent)
+				ctx.DrawPath(250+6*float64(i), 208, canvas.Rectangle(3, 5))
+			}
+		}
+	case 2:
+		for i := 0; i < 3; i++ {
+			if i < radiantSeriesScore {
+				ctx.SetFillColor(colorGold)
+				ctx.DrawPath(247+6*float64(i), 208, canvas.Rectangle(3, 5))
+			} else {
+				ctx.SetFillColor(canvas.Transparent)
+				ctx.DrawPath(247+6*float64(i), 208, canvas.Rectangle(3, 5))
+			}
+		}
+		for i := 0; i < 3; i++ {
+			if i < direSeriesScore {
+				ctx.SetFillColor(colorGold)
+				ctx.DrawPath(247+6*float64(i), 297, canvas.Rectangle(3, 5))
+			} else {
+				ctx.SetFillColor(canvas.Transparent)
+				ctx.DrawPath(247+6*float64(i), 297, canvas.Rectangle(3, 5))
+			}
+		}
+	}
 
 	if matchData.RadiantWin {
 		face = fontHypatiaSansPro.Face(60, colorRadiant, canvas.FontRegular, canvas.FontNormal, canvas.FontUnderline)

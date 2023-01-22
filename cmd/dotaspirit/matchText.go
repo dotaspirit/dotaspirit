@@ -17,7 +17,7 @@ func teamsToVS(radiantTeam, direTeam int) string {
 	}
 }
 
-func seriesScoreToText(radiantID, direID, seriesID int, matchID int64) string {
+func getSeriesScore(radiantID, direID, seriesID int, matchID int64) (int, int) {
 	seriesData := getSeriesData(matchID, seriesID)
 	radiantScore := 0
 	direScore := 0
@@ -28,7 +28,7 @@ func seriesScoreToText(radiantID, direID, seriesID int, matchID int64) string {
 			direScore++
 		}
 	}
-	return fmt.Sprintf("[%d:%d]", radiantScore, direScore)
+	return radiantScore, direScore
 }
 
 func teamIDtoMention(teamID int, teamName string) string {
@@ -101,7 +101,8 @@ func makeMatchText(matchData oDotaMatchData) string {
 	leagueText := leagueIDtoMention(leagueID, leagueName)
 	seriesScoreText := "[0:0]"
 	if seriesID != 0 {
-		seriesScoreText = seriesScoreToText(radiantID, direID, seriesID, matchID)
+		radSeriesScore, dirSeriesScore := getSeriesScore(radiantID, direID, seriesID, matchID)
+		seriesScoreText = fmt.Sprintf("[%d:%d]", radSeriesScore, dirSeriesScore)
 	}
 
 	if matchData.RadiantWin {

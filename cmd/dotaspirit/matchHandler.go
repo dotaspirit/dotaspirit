@@ -42,9 +42,11 @@ func handleMatch(whData oDotaMatchData) {
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
 
-	// makeMatchImage(whData, false)
+	if appconfig.IsDebug {
+		makeMatchImage(whData, true)
+	}
 
-	if getData(matchID) == "" && !isNullMatch {
+	if getData(matchID) == "" && !isNullMatch && !appconfig.IsDebug {
 		log.Println("Match wasn't posted yet")
 		matchData := getMatchData(matchID)
 		matchText := makeMatchText(matchData)

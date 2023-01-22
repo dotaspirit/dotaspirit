@@ -1,4 +1,5 @@
 {
   "vkGroupId": 123,
-  "vkAPIkey": "123"
+  "vkAPIkey": "123",
+  "isDebug": true
 }
