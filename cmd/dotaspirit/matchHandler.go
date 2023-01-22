@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 	"time"
@@ -37,7 +36,6 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 
 func handleMatch(whData oDotaMatchData) {
 	isNullMatch := whData.DireScore == 0 && whData.RadiantScore == 0
-	fmt.Println(isNullMatch)
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
 
@@ -45,7 +43,9 @@ func handleMatch(whData oDotaMatchData) {
 		makeMatchImage(whData, true)
 	}
 
-	if getData(matchID) == "" && !isNullMatch && !appconfig.IsDebug {
+	dbData := getData(matchID)
+
+	if dbData == "" && !isNullMatch && !appconfig.IsDebug {
 		log.Println("Match wasn't posted yet")
 		matchData := getMatchData(matchID)
 		matchText := makeMatchText(matchData)
@@ -58,7 +58,7 @@ func handleMatch(whData oDotaMatchData) {
 		}
 	} else if appconfig.IsDebug {
 		log.Println("Debug enabled not posting")
-	} else if getData(matchID) != "done" && getData(matchID) != "" {
+	} else if dbData != "done" && dbData != "" {
 		log.Println("Match posted trying to edit")
 		startTime := time.Now()
 		go handleGetFullMatchData(matchID, startTime)
