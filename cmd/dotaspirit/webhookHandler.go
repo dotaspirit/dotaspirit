@@ -9,6 +9,7 @@ import (
 func webhoookHandler(rw http.ResponseWriter, req *http.Request) {
 	body, err := io.ReadAll(req.Body)
 	defer req.Body.Close()
+	rw.Header().Add("Content-type", "application/json; charset=utf-8")
 	if err != nil {
 		rw.Write([]byte(`{"status":"fail"}`))
 		panic(err)

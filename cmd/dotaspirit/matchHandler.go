@@ -11,6 +11,7 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 	currentTime := time.Now()
 	hasSend := false
 	retries := 0
+	time.Sleep(15 * time.Minute)
 	for currentTime.Sub(startTime) < time.Hour*24 && !hasSend {
 		expBackoff := time.Duration(5 * retries)
 		time.Sleep(expBackoff * time.Minute)
@@ -18,9 +19,7 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 		log.Printf("Retrying getting full match %d data (retry %d)", matchID, retries)
 		matchData := getMatchData(matchID)
 		isNullMatch := matchData.DireScore == 0 && matchData.RadiantScore == 0
-		if len(matchData.RadiantGoldAdv) != 0 &&
-			len(matchData.PicksBans) != 0 &&
-			!isNullMatch {
+		if len(matchData.RadiantGoldAdv) != 0 && len(matchData.PicksBans) != 0 && !isNullMatch {
 			log.Printf("Found full match %d data", matchID)
 			matchText := makeMatchText(matchData)
 			makeMatchImage(matchData, true)
