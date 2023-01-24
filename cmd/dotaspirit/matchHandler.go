@@ -36,7 +36,6 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 }
 
 func handleMatch(whData oDotaMatchData) {
-	isNullMatch := whData.DireScore == 0 && whData.RadiantScore == 0
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
 
@@ -50,17 +49,20 @@ func handleMatch(whData oDotaMatchData) {
 
 	fmt.Println(dbData)
 
-	if dbData == "" && !isNullMatch && !appconfig.IsDebug {
+	if dbData == "" && !appconfig.IsDebug {
 		log.Println("Match wasn't posted yet")
 		matchData := getMatchData(matchID)
-		matchText := makeMatchText(matchData)
-		makeMatchImage(matchData, false)
-		postID, _ := sendMatchToVk(matchID, matchText, false)
-		markSent(matchID, postID)
-		log.Printf("Match posted to vk %d", postID)
-		startTime := time.Now()
-		if matchData.GameMode == 2 {
-			go handleGetFullMatchData(matchID, startTime)
+		isNullMatch := matchData.DireScore == 0 && matchData.RadiantScore == 0
+		if !isNullMatch {
+			matchText := makeMatchText(matchData)
+			makeMatchImage(matchData, false)
+			postID, _ := sendMatchToVk(matchID, matchText, false)
+			markSent(matchID, postID)
+			log.Printf("Match posted to vk %d", postID)
+			startTime := time.Now()
+			if matchData.GameMode == 2 {
+				go handleGetFullMatchData(matchID, startTime)
+			}
 		}
 	} else if appconfig.IsDebug {
 		log.Println("Debug enabled not posting")
