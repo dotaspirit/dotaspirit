@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 	"time"
@@ -46,8 +45,6 @@ func handleMatch(whData oDotaMatchData) {
 	} else {
 		dbData = getData(matchID)
 	}
-
-	fmt.Println(dbData)
 
 	if dbData == "" && !appconfig.IsDebug {
 		log.Println("Match wasn't posted yet")
