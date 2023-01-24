@@ -52,6 +52,7 @@ func getData(matchID int64) string {
 	})
 	if err != nil {
 		log.Println(err)
+		return ""
 	}
 	return string(valCopy[:])
 }
