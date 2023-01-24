@@ -39,7 +39,7 @@ func handleMatch(whData oDotaMatchData) {
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
 
-	dbData := "nil"
+	dbData := ""
 
 	if appconfig.IsDebug {
 		makeMatchImage(whData, true)
