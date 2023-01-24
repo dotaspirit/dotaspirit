@@ -236,7 +236,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 				playerInfo += "Rm "
 			}
 			playerInfo += getPlayerLane(player.LaneRole)
-			if player.LhT[10] < 20 && player.ObsPlaced >= 2 {
+			if len(player.LhT) >= 10 && player.LhT[10] < 20 && player.ObsPlaced >= 2 {
 				playerInfo += " Supp"
 			} else {
 				playerInfo += " Core"
