@@ -54,6 +54,7 @@ func handleMatch(whData oDotaMatchData) {
 		makeMatchImage(matchData, false)
 		postID, _ := sendMatchToVk(matchID, matchText, false)
 		markSent(matchID, postID)
+		log.Printf("Match posted to vk %d", postID)
 		startTime := time.Now()
 		if matchData.GameMode == 2 {
 			go handleGetFullMatchData(matchID, startTime)
