@@ -20,7 +20,6 @@ func webhoookHandler(rw http.ResponseWriter, req *http.Request) {
 	if req.Method != "POST" {
 		rw.WriteHeader(http.StatusTeapot)
 		rw.Write([]byte(`{"status":"fail"}`))
-		log.Println("Not post")
 		return
 	}
 	var whData oDotaMatchData
