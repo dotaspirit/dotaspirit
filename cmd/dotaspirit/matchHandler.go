@@ -51,6 +51,7 @@ func handleMatch(whData oDotaMatchData) {
 		matchData := getMatchData(matchID)
 		isNullMatch := matchData.DireScore == 0 && matchData.RadiantScore == 0
 		if !isNullMatch {
+			markHandling(matchID)
 			matchText := makeMatchText(matchData)
 			makeMatchImage(matchData, false)
 			postID, _ := sendMatchToVk(matchID, matchText, false)

@@ -8,6 +8,17 @@ import (
 	"github.com/dgraph-io/badger"
 )
 
+func markHandling(matchID int64) {
+	err := db.Update(func(txn *badger.Txn) error {
+		e := badger.NewEntry([]byte("vk_posted"+strconv.Itoa(int(matchID))), []byte("handling")).WithTTL(time.Hour * 24)
+		err := txn.SetEntry(e)
+		return err
+	})
+	if err != nil {
+		log.Fatal("Can't mark as handling", err)
+	}
+}
+
 func markSent(matchID int64, postID int) {
 	err := db.Update(func(txn *badger.Txn) error {
 		e := badger.NewEntry([]byte("vk_posted"+strconv.Itoa(int(matchID))), []byte(strconv.Itoa(postID))).WithTTL(time.Hour * 24)
@@ -15,7 +26,7 @@ func markSent(matchID int64, postID int) {
 		return err
 	})
 	if err != nil {
-		log.Fatal("Cant mark as sent", err)
+		log.Fatal("Can't mark as sent", err)
 	}
 }
 
@@ -26,7 +37,7 @@ func markDone(matchID int64) {
 		return err
 	})
 	if err != nil {
-		log.Fatal("Cant mark as sent")
+		log.Fatal("Can't mark as sent")
 	}
 }
 
