@@ -37,6 +37,7 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 func handleMatch(whData oDotaMatchData) {
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
+	markHandling(matchID)
 
 	dbData := ""
 
@@ -51,7 +52,6 @@ func handleMatch(whData oDotaMatchData) {
 		matchData := getMatchData(matchID)
 		isNullMatch := matchData.DireScore == 0 && matchData.RadiantScore == 0
 		if !isNullMatch {
-			markHandling(matchID)
 			matchText := makeMatchText(matchData)
 			makeMatchImage(matchData, false)
 			postID, _ := sendMatchToVk(matchID, matchText, false)
