@@ -46,7 +46,7 @@ func handleMatch(whData oDotaMatchData) {
 		dbData = getData(matchID)
 	}
 
-	if (dbData == "" || dbData != "handling") && !appconfig.IsDebug {
+	if dbData == "" && !appconfig.IsDebug {
 		markHandling(matchID)
 		log.Println("Match wasn't posted yet")
 		matchData := getMatchData(matchID)
