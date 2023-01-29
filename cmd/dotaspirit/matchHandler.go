@@ -37,7 +37,6 @@ func handleGetFullMatchData(matchID int64, startTime time.Time) {
 func handleMatch(whData oDotaMatchData) {
 	matchID := whData.MatchID
 	log.Printf("Received match %d from webhook", matchID)
-	markHandling(matchID)
 
 	dbData := ""
 
@@ -47,7 +46,8 @@ func handleMatch(whData oDotaMatchData) {
 		dbData = getData(matchID)
 	}
 
-	if (dbData == "" || dbData == "handling") && !appconfig.IsDebug {
+	if (dbData == "" || dbData != "handling") && !appconfig.IsDebug {
+		markHandling(matchID)
 		log.Println("Match wasn't posted yet")
 		matchData := getMatchData(matchID)
 		isNullMatch := matchData.DireScore == 0 && matchData.RadiantScore == 0
