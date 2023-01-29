@@ -190,14 +190,14 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	if matchData.RadiantWin {
 		face = fontHypatiaSansPro.Face(60, colorRadiant, canvas.FontRegular, canvas.FontNormal, canvas.FontUnderline)
-		ctx.DrawText(13, 234, canvas.NewTextLine(face, matchData.RadiantTeam.Name, canvas.Left))
+		ctx.DrawText(13, 234, canvas.NewTextLine(face, getTeamName(matchData.RadiantTeam.Name, true), canvas.Left))
 		face = fontHypatiaSansPro.Face(60, colorDire, canvas.FontRegular, canvas.FontNormal)
-		ctx.DrawText(13, 285, canvas.NewTextLine(face, matchData.DireTeam.Name, canvas.Left))
+		ctx.DrawText(13, 285, canvas.NewTextLine(face, getTeamName(matchData.DireTeam.Name, false), canvas.Left))
 	} else {
 		face = fontHypatiaSansPro.Face(60, colorRadiant, canvas.FontRegular, canvas.FontNormal)
-		ctx.DrawText(13, 234, canvas.NewTextLine(face, matchData.RadiantTeam.Name, canvas.Left))
+		ctx.DrawText(13, 234, canvas.NewTextLine(face, getTeamName(matchData.RadiantTeam.Name, true), canvas.Left))
 		face = fontHypatiaSansPro.Face(60, colorDire, canvas.FontRegular, canvas.FontNormal, canvas.FontUnderline)
-		ctx.DrawText(13, 285, canvas.NewTextLine(face, matchData.DireTeam.Name, canvas.Left))
+		ctx.DrawText(13, 285, canvas.NewTextLine(face, getTeamName(matchData.DireTeam.Name, false), canvas.Left))
 	}
 
 	// Players

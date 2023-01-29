@@ -63,6 +63,16 @@ func stripPresentedBy(leagueName string) string {
 	return poweredByRemoved
 }
 
+func getTeamName(name string, isRadiant bool) string {
+	if name != "" {
+		return name
+	}
+	if isRadiant {
+		return "Radiant"
+	}
+	return "Dire"
+}
+
 func parseHexColor(s string) (c color.RGBA) {
 	switch len(s) {
 	case 9:
