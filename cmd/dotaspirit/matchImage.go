@@ -13,13 +13,14 @@ import (
 
 func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
-	fontHypatiaSansPro := canvas.NewFontFamily("dejavu")
+	fontHypatiaSansPro := canvas.NewFontFamily("hypatia")
 	if err := fontHypatiaSansPro.LoadFontFile("./assets/fonts/HypatiaSansPro-Regular.otf", canvas.FontRegular); err != nil {
 		panic(err)
 	}
 	if err := fontHypatiaSansPro.LoadFontFile("./assets/fonts/HypatiaSansPro-Bold.otf", canvas.FontBold); err != nil {
 		panic(err)
 	}
+	defer fontHypatiaSansPro.Destroy()
 
 	savePath := fmt.Sprintf("./tmp/%d.png", matchData.MatchID)
 
