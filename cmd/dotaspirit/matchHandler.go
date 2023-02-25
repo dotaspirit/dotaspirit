@@ -41,7 +41,8 @@ func handleMatch(whData oDotaMatchData) {
 	dbData := ""
 
 	if appconfig.IsDebug {
-		makeMatchImage(whData, true)
+		matchData := getMatchData(matchID)
+		makeMatchImage(matchData, true)
 	} else {
 		dbData = getData(matchID)
 	}

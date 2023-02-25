@@ -28,6 +28,8 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	ctx := canvas.NewContext(c)
 
+	defer ctx.Close()
+
 	ctx.SetCoordSystem(canvas.CartesianIV)
 
 	colorBG := parseHexColor(cConfig.Bg)
