@@ -37,6 +37,7 @@ type dotaSocialLeaguesData []struct {
 
 type oDotaMatchData struct {
 	MatchID     int64  `json:"match_id"`
+	Version     int    `json:"version"`
 	RadiantName string `json:"radiant_name"`
 	DireName    string `json:"dire_name"`
 	DireScore   int    `json:"dire_score"`

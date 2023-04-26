@@ -286,52 +286,54 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	face = fontHypatiaSansPro.Face(17.1428571429, colorText, canvas.FontRegular, canvas.FontNormal)
 
-	for _, pickBan := range matchData.PicksBans {
-		if pickBan.IsPick {
-			hero, err := os.Open(fmt.Sprintf("./assets/heroes/%d.png", pickBan.HeroID))
-			if err != nil {
-				panic(err)
-			}
-			defer hero.Close()
-			heroImg, err := png.Decode(hero)
-			if err != nil {
-				panic(err)
-			}
-			if pickBan.Team == 0 {
-				ctx.DrawImage(15+(39+1)*float64(radiantPickBan), 179, heroImg, canvas.DPMM(6.5641025641))
-				ctx.SetFillColor(colorOverlay)
-				ctx.DrawPath(15+(39+1)*float64(radiantPickBan), 195, canvas.Rectangle(39, 6))
-				ctx.DrawText(35+(39+1)*float64(radiantPickBan), 200, canvas.NewTextLine(face, "PICK "+strconv.Itoa(pickBan.Order+1), canvas.Center))
-				radiantPickBan++
+	if matchData.GameMode == 2 {
+		for _, pickBan := range matchData.PicksBans {
+			if pickBan.IsPick {
+				hero, err := os.Open(fmt.Sprintf("./assets/heroes/%d.png", pickBan.HeroID))
+				if err != nil {
+					panic(err)
+				}
+				defer hero.Close()
+				heroImg, err := png.Decode(hero)
+				if err != nil {
+					panic(err)
+				}
+				if pickBan.Team == 0 {
+					ctx.DrawImage(15+(39+1)*float64(radiantPickBan), 179, heroImg, canvas.DPMM(6.5641025641))
+					ctx.SetFillColor(colorOverlay)
+					ctx.DrawPath(15+(39+1)*float64(radiantPickBan), 195, canvas.Rectangle(39, 6))
+					ctx.DrawText(35+(39+1)*float64(radiantPickBan), 200, canvas.NewTextLine(face, "PICK "+strconv.Itoa(pickBan.Order+1), canvas.Center))
+					radiantPickBan++
+				} else {
+					ctx.DrawImage(15+(39+1)*float64(direPickBan), 309, heroImg, canvas.DPMM(6.5641025641))
+					ctx.SetFillColor(colorOverlay)
+					ctx.DrawPath(15+(39+1)*float64(direPickBan), 325, canvas.Rectangle(39, 6))
+					ctx.DrawText(35+(39+1)*float64(direPickBan), 330, canvas.NewTextLine(face, "PICK "+strconv.Itoa(pickBan.Order+1), canvas.Center))
+					direPickBan++
+				}
 			} else {
-				ctx.DrawImage(15+(39+1)*float64(direPickBan), 309, heroImg, canvas.DPMM(6.5641025641))
-				ctx.SetFillColor(colorOverlay)
-				ctx.DrawPath(15+(39+1)*float64(direPickBan), 325, canvas.Rectangle(39, 6))
-				ctx.DrawText(35+(39+1)*float64(direPickBan), 330, canvas.NewTextLine(face, "PICK "+strconv.Itoa(pickBan.Order+1), canvas.Center))
-				direPickBan++
-			}
-		} else {
-			hero, err := os.Open(fmt.Sprintf("./assets/heroes/bw/%d.png", pickBan.HeroID))
-			if err != nil {
-				panic(err)
-			}
-			defer hero.Close()
-			heroImg, err := png.Decode(hero)
-			if err != nil {
-				panic(err)
-			}
-			if pickBan.Team == 0 {
-				ctx.DrawImage(15+(39+1)*float64(radiantPickBan), 179, heroImg, canvas.DPMM(6.5641025641))
-				ctx.SetFillColor(colorOverlay)
-				ctx.DrawPath(15+(39+1)*float64(radiantPickBan), 195, canvas.Rectangle(39, 6))
-				ctx.DrawText(35+(39+1)*float64(radiantPickBan), 200, canvas.NewTextLine(face, "BAN "+strconv.Itoa(pickBan.Order+1), canvas.Center))
-				radiantPickBan++
-			} else {
-				ctx.DrawImage(15+(39+1)*float64(direPickBan), 309, heroImg, canvas.DPMM(6.5641025641))
-				ctx.SetFillColor(colorOverlay)
-				ctx.DrawPath(15+(39+1)*float64(direPickBan), 325, canvas.Rectangle(39, 6))
-				ctx.DrawText(35+(39+1)*float64(direPickBan), 330, canvas.NewTextLine(face, "BAN "+strconv.Itoa(pickBan.Order+1), canvas.Center))
-				direPickBan++
+				hero, err := os.Open(fmt.Sprintf("./assets/heroes/bw/%d.png", pickBan.HeroID))
+				if err != nil {
+					panic(err)
+				}
+				defer hero.Close()
+				heroImg, err := png.Decode(hero)
+				if err != nil {
+					panic(err)
+				}
+				if pickBan.Team == 0 {
+					ctx.DrawImage(15+(39+1)*float64(radiantPickBan), 179, heroImg, canvas.DPMM(6.5641025641))
+					ctx.SetFillColor(colorOverlay)
+					ctx.DrawPath(15+(39+1)*float64(radiantPickBan), 195, canvas.Rectangle(39, 6))
+					ctx.DrawText(35+(39+1)*float64(radiantPickBan), 200, canvas.NewTextLine(face, "BAN "+strconv.Itoa(pickBan.Order+1), canvas.Center))
+					radiantPickBan++
+				} else {
+					ctx.DrawImage(15+(39+1)*float64(direPickBan), 309, heroImg, canvas.DPMM(6.5641025641))
+					ctx.SetFillColor(colorOverlay)
+					ctx.DrawPath(15+(39+1)*float64(direPickBan), 325, canvas.Rectangle(39, 6))
+					ctx.DrawText(35+(39+1)*float64(direPickBan), 330, canvas.NewTextLine(face, "BAN "+strconv.Itoa(pickBan.Order+1), canvas.Center))
+					direPickBan++
+				}
 			}
 		}
 	}
