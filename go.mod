@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/dgraph-io/badger v1.6.2
 	github.com/hashicorp/go-retryablehttp v0.7.4
-	github.com/rs/cors v1.9.0
+	github.com/rs/cors v1.10.0
 	github.com/tdewolff/canvas v0.0.0-20221230020303-9eb6d3934367
 )
 
