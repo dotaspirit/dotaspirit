@@ -81,7 +81,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 		xpAdv := matchData.RadiantXpAdv
 		maxXpAdv := xpAdv[0]
-		for i := 0; i <= matchDuration/60; i++ {
+		for i := 0; i <= matchDuration/60 && i < len(xpAdv); i++ {
 			posAdv := math.Abs(float64(xpAdv[i]))
 			if posAdv > float64(maxXpAdv) {
 				maxXpAdv = int(posAdv)
@@ -90,7 +90,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 		goldAdv := matchData.RadiantGoldAdv
 		maxGoldAdv := goldAdv[0]
-		for i := 0; i <= matchDuration/60; i++ {
+		for i := 0; i <= matchDuration/60 && i < len(goldAdv); i++ {
 			posAdv := math.Abs(float64(goldAdv[i]))
 			if posAdv > float64(maxGoldAdv) {
 				maxGoldAdv = int(posAdv)
@@ -239,7 +239,7 @@ func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 				playerInfo += "Rm "
 			}
 			playerInfo += getPlayerLane(player.LaneRole)
-			if len(player.LhT) >= 10 && player.LhT[10] < 20 && player.ObsPlaced >= 2 {
+			if len(player.LhT) > 10 && player.LhT[10] < 20 && player.ObsPlaced >= 2 {
 				playerInfo += " Supp"
 			} else {
 				playerInfo += " Core"

@@ -6,11 +6,13 @@ import (
 	"time"
 )
 
-func handleGetFullMatchData(matchID int64, startTime time.Time) {
+func handleGetFullMatchData(matchID int64, startTime time.Time, instantUpdate bool) {
 	currentTime := time.Now()
 	hasSend := false
 	retries := 0
-	time.Sleep(15 * time.Minute)
+	if !instantUpdate {
+		time.Sleep(15 * time.Minute)
+	}
 	for currentTime.Sub(startTime) < time.Hour*24 && !hasSend {
 		expBackoff := time.Duration(5 * retries)
 		time.Sleep(expBackoff * time.Minute)
@@ -60,7 +62,7 @@ func handleMatch(whData oDotaMatchData) {
 			log.Printf("Match posted to vk https://vk.com/wall-%d_%d", appconfig.VkGroupID, postID)
 			startTime := time.Now()
 			if matchData.GameMode == 2 {
-				go handleGetFullMatchData(matchID, startTime)
+				go handleGetFullMatchData(matchID, startTime, false)
 			}
 		}
 	} else if appconfig.IsDebug {
@@ -68,7 +70,7 @@ func handleMatch(whData oDotaMatchData) {
 	} else if dbData != "done" && dbData != "" {
 		log.Println("Match posted trying to edit")
 		startTime := time.Now()
-		go handleGetFullMatchData(matchID, startTime)
+		go handleGetFullMatchData(matchID, startTime, true)
 	} else {
 		log.Println("Data was posted nothing to do here")
 	}
