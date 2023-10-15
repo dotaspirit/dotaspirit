@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -16,8 +17,12 @@ var (
 
 func init() {
 	loadConfig("config/app.json", &appconfig)
-	db, _ = badger.Open(badger.DefaultOptions("./config/badger"))
-	err := loadConfig("./config/colors.json", &cConfig)
+	db, err := badger.Open(badger.DefaultOptions("./config/badger"))
+	if err != nil {
+		log.Println(err.Error())
+	}
+	fmt.Println(db)
+	err = loadConfig("./config/colors.json", &cConfig)
 	if err != nil {
 		log.Println(err.Error())
 	}
