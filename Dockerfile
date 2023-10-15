@@ -21,6 +21,4 @@ EXPOSE 3682
 
 VOLUME ["/config"]
 
-USER nonroot:nonroot
-
 ENTRYPOINT ["/dotaspirit"]
