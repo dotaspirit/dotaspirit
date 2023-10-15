@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+    dotaspirit:
+        container_name: dotaspirit
+        volumes:
+            - '/home/user/docker/dotasprir/config:/config'
+        image: dotaspirit
+        logging:
+            driver: json-file
+        ports:
+            - 3682:3682/tcp
+        restart: unless-stopped

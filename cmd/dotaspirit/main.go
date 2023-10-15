@@ -16,7 +16,7 @@ var (
 
 func init() {
 	loadConfig("config/app.json", &appconfig)
-	db, _ = badger.Open(badger.DefaultOptions("./tmp/badger"))
+	db, _ = badger.Open(badger.DefaultOptions("./config/badger"))
 	err := loadConfig("./config/colors.json", &cConfig)
 	if err != nil {
 		log.Println(err.Error())

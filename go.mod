@@ -1,6 +1,6 @@
 module github.com/dotaspirit/dotaspirit
 
-go 1.19
+go 1.21.3
 
 require (
 	github.com/dgraph-io/badger v1.6.2
