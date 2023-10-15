@@ -15,7 +15,6 @@ FROM gcr.io/distroless/base-debian12 AS build-release-stage
 WORKDIR /
 
 COPY --from=build-stage /dotaspirit /dotaspirit
-
 COPY assets/ ./assets/
 
 EXPOSE 3682
