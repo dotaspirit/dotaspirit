@@ -16,13 +16,10 @@ var (
 )
 
 func init() {
-	loadConfig("config/app.json", &appconfig)
-	db, err := badger.Open(badger.DefaultOptions("./config/badger"))
-	if err != nil {
-		log.Println(err.Error())
-	}
+	loadConfig("./config/app.json", &appconfig)
+	db, _ = badger.Open(badger.DefaultOptions("./config/badger"))
 	fmt.Println(db)
-	err = loadConfig("./config/colors.json", &cConfig)
+	err := loadConfig("./config/colors.json", &cConfig)
 	if err != nil {
 		log.Println(err.Error())
 	}
