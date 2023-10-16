@@ -14,10 +14,10 @@ import (
 func makeMatchImage(matchData oDotaMatchData, isFull bool) {
 
 	fontHypatiaSansPro := canvas.NewFontFamily("hypatia")
-	if err := fontHypatiaSansPro.LoadFontFile("./assets/fonts/HypatiaSansPro-Regular.otf", canvas.FontRegular); err != nil {
+	if err := fontHypatiaSansPro.LoadFontFile("./config/fonts/HypatiaSansPro-Regular.otf", canvas.FontRegular); err != nil {
 		panic(err)
 	}
-	if err := fontHypatiaSansPro.LoadFontFile("./assets/fonts/HypatiaSansPro-Bold.otf", canvas.FontBold); err != nil {
+	if err := fontHypatiaSansPro.LoadFontFile("./config/fonts/HypatiaSansPro-Bold.otf", canvas.FontBold); err != nil {
 		panic(err)
 	}
 	defer fontHypatiaSansPro.Destroy()
