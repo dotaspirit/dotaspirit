@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/dgraph-io/badger v1.6.2
-	github.com/hashicorp/go-retryablehttp v0.7.5
+	github.com/hashicorp/go-retryablehttp v0.7.6
 	github.com/rs/cors v1.11.0
 	github.com/tdewolff/canvas v0.0.0-20221230020303-9eb6d3934367
 )
@@ -33,7 +33,7 @@ require (
 	github.com/wcharczuk/go-chart/v2 v2.1.0 // indirect
 	golang.org/x/image v0.10.0 // indirect
 	golang.org/x/net v0.23.0 // indirect
-	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gonum.org/v1/plot v0.11.0 // indirect
 	star-tex.org/x/tex v0.4.0 // indirect
