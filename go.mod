@@ -1,6 +1,7 @@
 module github.com/dotaspirit/dotaspirit
 
 go 1.21
+toolchain go1.23.7
 
 require (
 	github.com/dgraph-io/badger v1.6.2
@@ -32,9 +33,9 @@ require (
 	github.com/tdewolff/parse/v2 v2.6.5 // indirect
 	github.com/wcharczuk/go-chart/v2 v2.1.0 // indirect
 	golang.org/x/image v0.18.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	gonum.org/v1/plot v0.11.0 // indirect
 	star-tex.org/x/tex v0.4.0 // indirect
 )
