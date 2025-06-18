@@ -1,11 +1,12 @@
 module github.com/dotaspirit/dotaspirit
 
-go 1.21
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
 	github.com/dgraph-io/badger v1.6.2
-	github.com/hashicorp/go-retryablehttp v0.7.7
+	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/rs/cors v1.11.1
 	github.com/tdewolff/canvas v0.0.0-20221230020303-9eb6d3934367
 )
